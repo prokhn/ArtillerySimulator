@@ -8,7 +8,7 @@ class CannonBall(pygame.sprite.Sprite):
         else:
             super().__init__()
 
-        self.image = pygame.image.load('sprites/cannonball_small_16x.png').convert_alpha()
+        self.image = pygame.image.load('sprites/cannonball_small_4x.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = pos[0] - self.rect.width // 2
         self.rect.y = pos[1] - self.rect.height // 2
@@ -33,7 +33,7 @@ class CannonBall(pygame.sprite.Sprite):
         self.rect.x += round(self.vel_x)
         self.rect.y -= round(self.vel_y)
 
-        if self.rect.x > self.gl.scr_width or self.rect.y + 16 > 600:
-            self.rect.y = 600 - 16
+        if self.rect.x > self.gl.scr_width or self.rect.y + self.rect.height > 600:
+            self.rect.y = 600 - self.rect.height
             self.freezed = True
             # self.kill()

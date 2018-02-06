@@ -20,11 +20,11 @@ class Globals:
 
     # ----------- Time -----------
     clock = pygame.time.Clock()
-    fps = 60
+    fps = 200
     # ----------------------------
 
     # -------- Game Logic --------
-    gravity = 25
+    gravity = 50
     air_friction = 1
     spr_alive = pygame.sprite.Group()
     sprites_groups = [spr_alive]

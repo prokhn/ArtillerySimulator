@@ -36,11 +36,11 @@ class Cannon(pygame.sprite.Sprite):
         self.straigt_min = 10   # Минимальная
         self.straigt_max = 50   # Максимальная
         self.straigt_delta = 2  # Прибавка за раз
-        self.rotation_center = (75, 500)        # Центр вращения пушки
-        self.pivot = Pivot(-80, 0)              # Координаты точки вращения пушки относительно центра
-        self.ball_spawn = Pivot(110, 0)         # Координаты спавна шарика отностительно центра
-        self.platform = pygame.image.load('sprites/cannon_0_pl.png').convert_alpha()    # Картинка платформы
-        self.gun = pygame.image.load('sprites/cannon_0_gun_d2.png').convert_alpha()     # Картинка пушки
+        self.rotation_center = (27, 573)        # Центр вращения пушки
+        self.pivot = Pivot(-20, 0)              # Координаты точки вращения пушки относительно центра
+        self.ball_spawn = Pivot(25, 0)         # Координаты спавна шарика отностительно центра
+        self.platform = pygame.image.load('sprites/cannon_0_pl_2.png').convert_alpha()    # Картинка платформы
+        self.gun = pygame.image.load('sprites/cannon_0_gun_d3.png').convert_alpha()     # Картинка пушки
         # ----------------------------------------
 
         self.ball_spawn.set_new(self.ball_spawn.x - self.pivot.x, self.ball_spawn.y + self.pivot.y)
