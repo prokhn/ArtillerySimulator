@@ -44,7 +44,6 @@ class Cannon(pygame.sprite.Sprite):
         # ----------------------------------------
 
         self.ball_spawn.set_new(self.ball_spawn.x - self.pivot.x, self.ball_spawn.y + self.pivot.y)
-        print(self.ball_spawn)
 
         self.gun_rot = self.gun
         self.rotation_center = (self.rotation_center[0] - self.pivot.x,
@@ -58,6 +57,8 @@ class Cannon(pygame.sprite.Sprite):
         self.on_rotate()
         self.gl = Globals()
 
+        self.moving_up = True
+
     def on_rotate(self):
         self.gun_rot = pygame.transform.rotate(self.gun, self.tilt)
         self.rot_rect = self.gun_rot.get_rect()
@@ -68,6 +69,19 @@ class Cannon(pygame.sprite.Sprite):
         self.rot_rect.y -= dy
 
     def update(self, *args):
+        if self.moving_up:
+            if self.tilt < self.tilt_max:
+                self.tilt += 1
+            else:
+                self.moving_up = False
+            self.on_rotate()
+        else:
+            if self.tilt > self.tilt_min:
+                self.tilt -= 1
+            else:
+                self.moving_up = True
+            self.on_rotate()
+
         if 1 in self.gl.input.m_pressed:
             print(self.gl.input.m_pos)
         if pygame.K_UP in self.gl.input.k_hold:
@@ -88,7 +102,7 @@ class Cannon(pygame.sprite.Sprite):
                 self.straigt -= self.straigt_delta
             print(self.straigt)
 
-        if pygame.K_SPACE in self.gl.input.k_pressed: # or pygame.K_SPACE in self.gl.input.k_hold:
+        if pygame.K_SPACE in self.gl.input.k_pressed or pygame.K_SPACE in self.gl.input.k_hold:
             x = self.rotation_center[0] + self.pivot.x + self.ball_spawn.dxy * math.cos(math.radians(self.tilt))
             y = self.rotation_center[1] - self.pivot.y - self.ball_spawn.dxy * math.sin(math.radians(self.tilt))
             # print(self.rotation_center, x, y)
@@ -96,7 +110,7 @@ class Cannon(pygame.sprite.Sprite):
             y_vel = self.straigt * math.sin(math.radians(self.tilt))
             new_ball = CannonBall((x, y), x_vel, y_vel)
             self.gl.spr_alive.add(new_ball)
-            self.gl.logger('o', 'New ball in ({}, {})'.format(x, y), console_only=True)
+            # self.gl.logger('o', 'New ball in ({}, {})'.format(x, y), console_only=True)
         # if pygame.K_a in self.gl.input.k_pressed:
         #     self.pivot = Pivot(self.pivot.x - 5, self.pivot.y)
         #     print(self.pivot)

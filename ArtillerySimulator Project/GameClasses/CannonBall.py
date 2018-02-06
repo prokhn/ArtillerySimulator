@@ -1,4 +1,4 @@
-import pygame
+import pygame, time
 from GlobalVariables import Globals
 
 class CannonBall(pygame.sprite.Sprite):
@@ -18,8 +18,16 @@ class CannonBall(pygame.sprite.Sprite):
 
         self.gl = Globals()
 
-
+        self.time_to_kill = 0
     def update(self, *args):
+        if self.rect.y + 16 >= 600:
+            if self.time_to_kill == 0:
+                self.time_to_kill = time.time() + 3
+            else:
+                if time.time() >= self.time_to_kill:
+                    self.kill()
+            return
+
         if self.rect.x > self.gl.scr_width or self.rect.y > self.gl.scr_height:
             self.kill()
         self.vel_y -= self.gl.gravity / self.gl.fps
