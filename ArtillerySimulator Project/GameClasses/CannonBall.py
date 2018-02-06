@@ -18,10 +18,12 @@ class CannonBall(pygame.sprite.Sprite):
 
         self.gl = Globals()
 
+        self.freezed = False
+
 
     def update(self, *args):
-        if self.rect.x > self.gl.scr_width or self.rect.y > self.gl.scr_height:
-            self.kill()
+        if self.freezed:
+            return
         self.vel_y -= self.gl.gravity / self.gl.fps
         if self.vel_x - self.gl.air_friction / self.gl.fps > 0:
             self.vel_x -= self.gl.air_friction / self.gl.fps
@@ -30,3 +32,8 @@ class CannonBall(pygame.sprite.Sprite):
 
         self.rect.x += round(self.vel_x)
         self.rect.y -= round(self.vel_y)
+
+        if self.rect.x > self.gl.scr_width or self.rect.y + 16 > 600:
+            self.rect.y = 600 - 16
+            self.freezed = True
+            # self.kill()

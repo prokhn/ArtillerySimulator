@@ -96,20 +96,6 @@ class Cannon(pygame.sprite.Sprite):
             y_vel = self.straigt * math.sin(math.radians(self.tilt))
             new_ball = CannonBall((x, y), x_vel, y_vel)
             self.gl.spr_alive.add(new_ball)
-            self.gl.logger('o', 'New ball in ({}, {})'.format(x, y), console_only=True)
-        # if pygame.K_a in self.gl.input.k_pressed:
-        #     self.pivot = Pivot(self.pivot.x - 5, self.pivot.y)
-        #     print(self.pivot)
-        # if pygame.K_d in self.gl.input.k_pressed:
-        #     self.pivot = Pivot(self.pivot.x + 5, self.pivot.y)
-        #     print(self.pivot)
-        #
-        # if pygame.K_w in self.gl.input.k_pressed:
-        #     self.pivot = Pivot(self.pivot.x, self.pivot.y + 5)
-        #     print(self.pivot)
-        # if pygame.K_s in self.gl.input.k_pressed:
-        #     self.pivot = Pivot(self.pivot.x, self.pivot.y - 5)
-        #     print(self.pivot)
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.gun_rot, (self.rot_rect.x, self.rot_rect.y))
