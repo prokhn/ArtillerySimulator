@@ -1,6 +1,8 @@
 import pygame, random
 from GlobalVariables import Globals
+from ImageLoader import ImageLoader
 from GameClasses.Cannon import Cannon
+from GameClasses.Coin import Coin
 
 class Game:
     def __init__(self):
@@ -10,16 +12,21 @@ class Game:
         self.background = pygame.image.load('sprites/background_1280x720.png')
         self.ground = pygame.image.load('sprites/ground_smaller.png').convert_alpha()
         self.ground_grass = pygame.image.load('sprites/ground_grass.png').convert_alpha()
-        # self.cannon = pygame.image.load('sprites/cannon_0_smaller.png').convert_alpha()
-        # self.target = pygame.image.load('sprites/target_smaller.png').convert_alpha()
+
+        iml = ImageLoader()
+        spr_path = 'sprites/'
+        Globals.images = iml.load([('basic', spr_path + '_basic.png')])
+
 
     def run(self):
         pygame.init()
 
         self.load_sprites()
         gl = Globals()
-
+        print(gl.images)
         all_sprites = pygame.sprite.Group()
+
+        coin = Coin(100, 100, 'skbvks', 10, all_sprites)
 
         cannon = Cannon(0, 0)
         cannon.pl_rect.x = 10
