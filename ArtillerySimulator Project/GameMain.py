@@ -30,7 +30,7 @@ class Game:
 
         cannon = Cannon(0, 0)
         cannon.pl_rect.x = 10
-        cannon.pl_rect.y = gl.scr_height - self.ground.get_rect().height - cannon.pl_rect.height
+        cannon.pl_rect.y = gl.scr_height - self.ground.get_rect().height - cannon.pl_rect.height  +15
 
         #all_sprites.add(cannon)
 

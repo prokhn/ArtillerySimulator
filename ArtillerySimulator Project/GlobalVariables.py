@@ -23,8 +23,8 @@ class Globals:
     fps = 60
     # ----------------------------
     #---------cannons---------
-    mass = [['sprites/cannon_0_pl.png', 'sprites/cannon_0_gun_d2.png', 0,0,90,1,10,10,50,2,(75,500),(-80,0),(110,0)], ['sprites/76-mm_zeni_lafett.png', 'sprites/76-mm_zenit_orudie.png', 0,0,90,1,50,10,50,2,(80,535),(-75,0),(70,0)]]
-    gan_number = 1
+    mass = [['sprites/cannon_0_pl.png', 'sprites/cannon_0_gun_d2.png', 0,0,90,1,10,10,50,2,(75,500),(-80,0),(110,0)], ['sprites/76-mm_zeni_lafett.png', 'sprites/76-mm_zenit_orudie.png', 0,0,50,1,50,10,50,2,(80,540),(-65,0),(70,0)],['sprites/152-mm_gaub_lafet.png', 'sprites/152-mm_gaub_orudie.png', 0,0,50,1,60,10,60,2,(155,570),(0,0),(70,-240)]]
+    gan_number = 2
     # -------- Game Logic --------
     gravity = 25
     air_friction = 1
