@@ -4,8 +4,8 @@ from GameClasses.CannonBall import CannonBall
 
 
 class Pivot:
-    def __init__(self, x, y):
-        self.set_new(x, y)
+    def __init__(self, mass):
+        self.set_new(mass[0], mass[1])
 
     def set_new(self, x, y):
         self.x = x
@@ -28,19 +28,19 @@ class Cannon(pygame.sprite.Sprite):
             super().__init__()
 
         # Different values for all cannons
-        self.tilt = 0           # Начальный наклон пушки
-        self.tilt_min = 0       # Минимальный наклон
-        self.tilt_max = 90      # Максимальный наклон
-        self.tilt_delta = 1     # Прибавка к наклону за одно нажатие клавиши
-        self.straigt = 10       # Скорость вылетающего снаряда
-        self.straigt_min = 10   # Минимальная
-        self.straigt_max = 50   # Максимальная
-        self.straigt_delta = 2  # Прибавка за раз
-        self.rotation_center = (75, 500)        # Центр вращения пушки
-        self.pivot = Pivot(-80, 0)              # Координаты точки вращения пушки относительно центра
-        self.ball_spawn = Pivot(110, 0)         # Координаты спавна шарика отностительно центра
-        self.platform = pygame.image.load('sprites/cannon_0_pl.png').convert_alpha()    # Картинка платформы
-        self.gun = pygame.image.load('sprites/cannon_0_gun_d2.png').convert_alpha()     # Картинка пушки
+        self.tilt = Globals.mass[Globals.gan_number][2]           # Начальный наклон пушки
+        self.tilt_min = Globals.mass[Globals.gan_number][3]      # Минимальный наклон
+        self.tilt_max = Globals.mass[Globals.gan_number][4]    # Максимальный наклон
+        self.tilt_delta = Globals.mass[Globals.gan_number][5]     # Прибавка к наклону за одно нажатие клавиши
+        self.straigt = Globals.mass[Globals.gan_number][6]       # Скорость вылетающего снаряда
+        self.straigt_min = Globals.mass[Globals.gan_number][7]   # Минимальная
+        self.straigt_max = Globals.mass[Globals.gan_number][8]   # Максимальная
+        self.straigt_delta = Globals.mass[Globals.gan_number][9]  # Прибавка за раз
+        self.rotation_center = Globals.mass[Globals.gan_number][10]        # Центр вращения пушки
+        self.pivot = Pivot(Globals.mass[Globals.gan_number][11])              # Координаты точки вращения пушки относительно центра
+        self.ball_spawn = Pivot(Globals.mass[Globals.gan_number][12])         # Координаты спавна шарика отностительно центра
+        self.platform = pygame.image.load(Globals.mass[Globals.gan_number][0]).convert_alpha()    # Картинка платформы
+        self.gun = pygame.image.load(Globals.mass[Globals.gan_number][1]).convert_alpha()     # Картинка пушки
         # ----------------------------------------
 
         self.ball_spawn.set_new(self.ball_spawn.x - self.pivot.x, self.ball_spawn.y + self.pivot.y)
