@@ -24,7 +24,8 @@ class Game:
                                    ('cannon_1',     'cannon_1.png'),
                                    ('cannon_1_pl',  'cannon_1_pl.png'),
                                    ('cannon_2',     'cannon_2.png'),
-                                   ('cannon_2_pl',  'cannon_2_pl.png')])
+                                   ('cannon_2_pl',  'cannon_2_pl.png'),
+                                   ('ball_0',       'ball_1.png')])
 
 
     def run(self):

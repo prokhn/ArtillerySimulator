@@ -21,11 +21,8 @@ class Pivot:
         return '<Pivot({}, {})>'.format(self.x, self.y)
 
 class Cannon(pygame.sprite.Sprite):
-    def __init__(self, x, y, groups=None):
-        if groups:
-            super().__init__(groups)
-        else:
-            super().__init__()
+    def __init__(self, params):
+        super().__init__()
 
         # Different values for all cannons
         self.tilt = Globals.mass[Globals.gan_number][2]           # Начальный наклон пушки
