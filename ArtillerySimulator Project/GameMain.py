@@ -36,11 +36,6 @@ class Game:
         all_sprites = pygame.sprite.Group()
 
         # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
-
-        # cannon = Cannon(0, 0)
-        # cannon.pl_rect.x = 10
-        # cannon.pl_rect.y = gl.scr_height - self.ground.get_rect().height - cannon.pl_rect.height  +15
-
         #all_sprites.add(cannon)
 
         background = Sprite(0, 0, 'background', all_sprites)
@@ -49,6 +44,11 @@ class Game:
 
         ground.set_pos(0, gl.scr_height - ground.rect.height)
         grass.set_pos(0, ground.rect.y - grass.rect.height)
+
+        cannon = Cannon(0, 0)
+        # cannon.pl_rect.x = 10
+        # cannon.pl_rect.y = gl.scr_height - ground.rect.height - cannon.pl_rect.height + 15
+
 
         running = True
         while running:
@@ -68,8 +68,8 @@ class Game:
                 sp_group.update()
                 sp_group.draw(gl.screen)
 
-            # cannon.update()
-            # cannon.draw(gl.screen)
+            cannon.update()
+            cannon.draw(gl.screen)
             all_sprites.update()
             all_sprites.draw(gl.screen)
 

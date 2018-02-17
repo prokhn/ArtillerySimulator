@@ -39,12 +39,11 @@ class Cannon(pygame.sprite.Sprite):
         self.rotation_center = Globals.mass[Globals.gan_number][10]        # Центр вращения пушки
         self.pivot = Pivot(Globals.mass[Globals.gan_number][11])              # Координаты точки вращения пушки относительно центра
         self.ball_spawn = Pivot(Globals.mass[Globals.gan_number][12])         # Координаты спавна шарика отностительно центра
-        self.platform = pygame.image.load(Globals.mass[Globals.gan_number][0]).convert_alpha()    # Картинка платформы
-        self.gun = pygame.image.load(Globals.mass[Globals.gan_number][1]).convert_alpha()     # Картинка пушки
+        self.platform = Globals.images[Globals.mass[Globals.gan_number][0]]    # Картинка платформы
+        self.gun = Globals.images[Globals.mass[Globals.gan_number][1]]     # Картинка пушки
         # ----------------------------------------
 
         self.ball_spawn.set_new(self.ball_spawn.x - self.pivot.x, self.ball_spawn.y + self.pivot.y)
-        print(self.ball_spawn)
 
         self.gun_rot = self.gun
         self.rotation_center = (self.rotation_center[0] - self.pivot.x,
