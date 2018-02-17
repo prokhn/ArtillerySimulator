@@ -1,1 +1,1 @@
-⚠: Coin init: no sprite with name skbvks
+No logs

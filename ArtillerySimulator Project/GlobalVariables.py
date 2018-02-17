@@ -4,9 +4,9 @@ from Logger import Logger
 
 class Globals:
     # ---------- Screen ----------
-    scr_width = 1280
-    scr_height = 720
-    screen = pygame.display.set_mode((scr_width, scr_height))
+    scr_width = 1920
+    scr_height = 1080
+    screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
     # ----------------------------
 
     # ----------- Images ---------

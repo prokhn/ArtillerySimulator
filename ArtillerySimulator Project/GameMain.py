@@ -9,13 +9,21 @@ class Game:
         pass
 
     def load_sprites(self):
-        self.background = pygame.image.load('sprites/background_1280x720.png')
-        self.ground = pygame.image.load('sprites/ground_smaller.png').convert_alpha()
-        self.ground_grass = pygame.image.load('sprites/ground_grass.png').convert_alpha()
+        # self.background = pygame.image.load('sprites/background_1280x720.png')
+        # self.ground = pygame.image.load('sprites/ground_smaller.png').convert_alpha()
+        # self.ground_grass = pygame.image.load('sprites/ground_grass.png').convert_alpha()
 
-        iml = ImageLoader()
-        spr_path = 'sprites/'
-        Globals.images = iml.load([('basic', spr_path + '_basic.png')])
+        iml = ImageLoader('sprites/')
+        Globals.images = iml.load([('basic',        '_basic.png'),
+                                   ('background',   'background_fullhd.png'),
+                                   ('ground', 'ground.png'),
+                                   ('ground_grass', 'ground_grass.png'),
+                                   ('cannon_0',     'cannon_0.png'),
+                                   ('cannon_0_pl',  'cannon_0_pl.png'),
+                                   ('cannon_1',     'cannon_1.png'),
+                                   ('cannon_1_pl',  'cannon_1_pl.png'),
+                                   ('cannon_2',     'cannon_2.png'),
+                                   ('cannon_2_pl',  'cannon_2_pl.png')])
 
 
     def run(self):
@@ -23,37 +31,41 @@ class Game:
 
         self.load_sprites()
         gl = Globals()
-        print(gl.images)
+
         all_sprites = pygame.sprite.Group()
 
-        coin = Coin(100, 100, 'skbvks', 10, all_sprites)
+        # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
 
-        cannon = Cannon(0, 0)
-        cannon.pl_rect.x = 10
-        cannon.pl_rect.y = gl.scr_height - self.ground.get_rect().height - cannon.pl_rect.height  +15
+        # cannon = Cannon(0, 0)
+        # cannon.pl_rect.x = 10
+        # cannon.pl_rect.y = gl.scr_height - self.ground.get_rect().height - cannon.pl_rect.height  +15
 
         #all_sprites.add(cannon)
+
+        background = gl.images['background']
+        ground = gl.images['ground']
+        grass =  gl.images['ground_grass']
 
         running = True
         while running:
             gl.input.update()
-            if gl.input.quit:
+            if pygame.K_ESCAPE in gl.input.k_pressed:
+                running = False
+                gl.input.quit = True
+            elif gl.input.quit:
                 running = False
             pygame.display.update()
 
-            gl.screen.blit(self.background, (0, 0))
-            gl.screen.blit(self.ground, (0, gl.scr_height - self.ground.get_rect().height))
-            gl.screen.blit(self.ground_grass, (0, gl.scr_height - self.ground.get_rect().height - self.ground_grass.get_rect().height))
-            # gl.screen.blit(self.cannon, (10, gl.scr_height - self.ground.get_rect().height - self.cannon.get_rect().height))
-            # curr_target = pygame.transform.scale(self.target, (100, 100))
-            #gl.screen.blit(curr_target, (random.randint(500, 1100), random.randint(100, 500)))
-            # gl.screen.blit(curr_target, (1000, 200))
+            gl.screen.blit(background, (0, 0))
+            gl.screen.blit(ground, (0, gl.scr_height - ground.get_rect().height))
+            gl.screen.blit(grass, (0, gl.scr_height - ground.get_rect().height - grass.get_rect().height))
+
             for sp_group in gl.sprites_groups:
                 sp_group.update()
                 sp_group.draw(gl.screen)
 
-            cannon.update()
-            cannon.draw(gl.screen)
+            # cannon.update()
+            # cannon.draw(gl.screen)
             all_sprites.update()
             all_sprites.draw(gl.screen)
 
