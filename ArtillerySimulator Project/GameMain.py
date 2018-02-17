@@ -3,6 +3,7 @@ from GlobalVariables import Globals
 from ImageLoader import ImageLoader
 from GameClasses.Cannon import Cannon
 from GameClasses.Coin import Coin
+from GameClasses.Sprite import Sprite
 
 class Game:
     def __init__(self):
@@ -42,9 +43,12 @@ class Game:
 
         #all_sprites.add(cannon)
 
-        background = gl.images['background']
-        ground = gl.images['ground']
-        grass =  gl.images['ground_grass']
+        background = Sprite(0, 0, 'background', all_sprites)
+        ground = Sprite(0, 0, 'ground', all_sprites)
+        grass =  Sprite(0, 0, 'ground_grass', all_sprites)
+
+        ground.set_pos(0, gl.scr_height - ground.rect.height)
+        grass.set_pos(0, ground.rect.y - grass.rect.height)
 
         running = True
         while running:
@@ -56,9 +60,9 @@ class Game:
                 running = False
             pygame.display.update()
 
-            gl.screen.blit(background, (0, 0))
-            gl.screen.blit(ground, (0, gl.scr_height - ground.get_rect().height))
-            gl.screen.blit(grass, (0, gl.scr_height - ground.get_rect().height - grass.get_rect().height))
+            # gl.screen.blit(background, (0, 0))
+            # gl.screen.blit(ground, (0, gl.scr_height - ground.get_rect().height))
+            # gl.screen.blit(grass, (0, gl.scr_height - ground.get_rect().height - grass.get_rect().height))
 
             for sp_group in gl.sprites_groups:
                 sp_group.update()
