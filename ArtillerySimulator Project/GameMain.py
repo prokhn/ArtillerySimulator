@@ -33,21 +33,23 @@ class Game:
         self.load_sprites()
         gl = Globals()
 
-        all_sprites = pygame.sprite.Group()
+        sprg_bg = pygame.sprite.Group()     # Background sprites
+        sprg_fg = pygame.sprite.Group()     # Foreground sprites
 
         # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
         #all_sprites.add(cannon)
 
-        background = Sprite(0, 0, 'background', all_sprites)
-        ground = Sprite(0, 0, 'ground', all_sprites)
-        grass =  Sprite(0, 0, 'ground_grass', all_sprites)
+        background = Sprite(0, 0, 'background', sprg_bg)
+        ground = Sprite(0, 0, 'ground', sprg_bg)
+        grass =  Sprite(0, 0, 'ground_grass', sprg_fg)
 
         ground.set_pos(0, gl.scr_height - ground.rect.height)
         grass.set_pos(0, ground.rect.y - grass.rect.height)
 
         cannon = Cannon(0, 0)
-        # cannon.pl_rect.x = 10
-        # cannon.pl_rect.y = gl.scr_height - ground.rect.height - cannon.pl_rect.height + 15
+        cannon.pl_rect.x = 10
+        cannon.pl_rect.y = ground.rect.y - cannon.pl_rect.height
+        print(cannon.pl_rect)
 
 
         running = True
@@ -68,10 +70,13 @@ class Game:
                 sp_group.update()
                 sp_group.draw(gl.screen)
 
+            sprg_bg.draw(gl.screen)
+
             cannon.update()
             cannon.draw(gl.screen)
-            all_sprites.update()
-            all_sprites.draw(gl.screen)
+
+            sprg_fg.draw(gl.screen)
+
 
             gl.clock.tick(gl.fps)
 
