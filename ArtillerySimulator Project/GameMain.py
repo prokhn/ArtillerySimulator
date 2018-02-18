@@ -1,6 +1,7 @@
 import pygame, random
 from GlobalVariables import Globals
 from ImageLoader import ImageLoader
+from Engine.CannonLoader import CannonLoader
 from GameClasses.Cannon import Cannon
 from GameClasses.Coin import Coin
 from GameClasses.Sprite import Sprite
@@ -9,7 +10,7 @@ class Game:
     def __init__(self):
         pass
 
-    def load_sprites(self):
+    def on_load(self):
         # self.background = pygame.image.load('sprites/background_1280x720.png')
         # self.ground = pygame.image.load('sprites/ground_smaller.png').convert_alpha()
         # self.ground_grass = pygame.image.load('sprites/ground_grass.png').convert_alpha()
@@ -26,12 +27,15 @@ class Game:
                                    ('cannon_2',     'cannon_2.png'),
                                    ('cannon_2_pl',  'cannon_2_pl.png'),
                                    ('ball_0',       'ball_1.png')])
+        cnl = CannonLoader('data/')
+        Globals.cannons = cnl.load(['cannon_0.json'])
+
 
 
     def run(self):
         pygame.init()
 
-        self.load_sprites()
+        self.on_load()
         gl = Globals()
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
@@ -47,10 +51,11 @@ class Game:
         ground.set_pos(0, gl.scr_height - ground.rect.height)
         grass.set_pos(0, ground.rect.y - grass.rect.height)
 
-        cannon = Cannon(0, 0)
-        cannon.pl_rect.x = 10
-        cannon.pl_rect.y = ground.rect.y - cannon.pl_rect.height
-        print(cannon.pl_rect)
+        cannon = Globals.cannons[0]
+        # cannon = Cannon(0, 0)
+        # cannon.pl_rect.x = 10
+        # cannon.pl_rect.y = ground.rect.y - cannon.pl_rect.height
+        # print(cannon.pl_rect)
 
 
         running = True
@@ -67,17 +72,16 @@ class Game:
             # gl.screen.blit(ground, (0, gl.scr_height - ground.get_rect().height))
             # gl.screen.blit(grass, (0, gl.scr_height - ground.get_rect().height - grass.get_rect().height))
 
+            sprg_bg.draw(gl.screen)
+
             for sp_group in gl.sprites_groups:
                 sp_group.update()
                 sp_group.draw(gl.screen)
-
-            sprg_bg.draw(gl.screen)
 
             cannon.update()
             cannon.draw(gl.screen)
 
             sprg_fg.draw(gl.screen)
-
 
             gl.clock.tick(gl.fps)
 

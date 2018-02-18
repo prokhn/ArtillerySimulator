@@ -2,10 +2,15 @@ import pygame, math
 from GlobalVariables import Globals
 from GameClasses.CannonBall import CannonBall
 
+def arg_strip(arg):
+    return arg.strip()
 
 class Pivot:
-    def __init__(self, mass):
-        self.set_new(mass[0], mass[1])
+    def __init__(self, coords: str):
+        x, y = map(arg_strip, coords.split(','))
+        x = int(x[1:])
+        y = int(y[:-1])
+        self.set_new(x, y)
 
     def set_new(self, x, y):
         self.x = x
@@ -20,10 +25,12 @@ class Pivot:
     def __repr__(self):
         return '<Pivot({}, {})>'.format(self.x, self.y)
 
+
 class Cannon(pygame.sprite.Sprite):
     def __init__(self, params):
         super().__init__()
 
+        '''
         # Different values for all cannons
         self.tilt = Globals.mass[Globals.gan_number][2]           # Начальный наклон пушки
         self.tilt_min = Globals.mass[Globals.gan_number][3]      # Минимальный наклон
@@ -39,60 +46,78 @@ class Cannon(pygame.sprite.Sprite):
         self.platform = Globals.images[Globals.mass[Globals.gan_number][0]]    # Картинка платформы
         self.gun = Globals.images[Globals.mass[Globals.gan_number][1]]     # Картинка пушки
         # ----------------------------------------
+        '''
+
+        # ---------------------------------------------
+        self.name = params['name']
+        x = params['x']                                 # Координаты платформы
+        y = params['y']                                 # Координаты платформы
+        self.tilt = params['tilt']                      # Начальный наклон пушки
+        self.tilt_min = params['tilt_min']              # Минимальный наклон
+        self.tilt_max = params['tilt_max']              # Максимальный наклон
+        self.tilt_delta = params['tilt_delta']          # Прибавка к наклону за одно нажатие клавиши
+        self.straigt = params['straigt']                # Скорость вылетающего снаряда
+        self.straigt_min = params['straigt_min']        # Минимальная
+        self.straigt_max = params['straigt_max']        # Максимальная
+        self.straigt_delta = params['straigt_delta']    # Прибавка за раз
+        self.gun_rotc = Pivot(params['gun_rotc'])       # ЦВ пушки
+        self.plt_rotc = Pivot(params['plt_rotc'])       # ЦВ относительно центра платформы
+        self.pivot = Pivot(params['pivot'])             # Координаты точки вращения пушки относительно центра
+        self.ball_spawn = Pivot(params['ball_spawn'])   # Координаты спавна шарика отностительно центра
+        self.img_gun = Globals.images[params['img_gun']]                # Картинка пушки
+        self.img_platform = Globals.images[params['img_platform']]      # Картинка платформы
+        self.img_ball = Globals.images[params['img_ball']]              # Картинка снаряда
+        # ---------------------------------------------
 
         self.ball_spawn.set_new(self.ball_spawn.x - self.pivot.x, self.ball_spawn.y + self.pivot.y)
 
-        self.gun_rot = self.gun
-        self.rotation_center = (self.rotation_center[0] - self.pivot.x,
-                                self.rotation_center[1] - self.pivot.y)
+        self.gun_rot = self.img_gun
+        self.gun_rotc.set_new(self.gun_rotc.x - self.pivot.x, self.gun_rotc.y - self.pivot.y)
 
-        self.pl_rect = self.platform.get_rect()
+        self.pl_rect = self.img_platform.get_rect()
         self.pl_rect.x = x
         self.pl_rect.y = y
 
         self.rot_rect = self.gun_rot.get_rect()
         self.on_rotate()
-        self.gl = Globals()
 
     def on_rotate(self):
-        self.gun_rot = pygame.transform.rotate(self.gun, self.tilt)
+        self.gun_rot = pygame.transform.rotate(self.img_gun, self.tilt)
         self.rot_rect = self.gun_rot.get_rect()
-        self.rot_rect.center = (self.rotation_center[0] + self.pivot.x, self.rotation_center[1] + self.pivot.y)
+        self.rot_rect.center = (self.gun_rotc.x + self.pivot.x, self.gun_rotc.y + self.pivot.y)
         dx = self.pivot.dxy * math.cos(math.radians(self.tilt))
         dy = self.pivot.dxy * math.sin(math.radians(self.tilt))
         self.rot_rect.x += dx
         self.rot_rect.y -= dy
 
     def update(self, *args):
-        if 1 in self.gl.input.m_pressed:
-            print(self.gl.input.m_pos)
-        if pygame.K_UP in self.gl.input.k_hold:
+        if 1 in Globals.input.m_pressed:
+            print(Globals.input.m_pos)
+        if pygame.K_UP in Globals.input.k_hold:
             if self.tilt < self.tilt_max:
                 self.tilt += 1
                 self.on_rotate()
-        elif pygame.K_DOWN in self.gl.input.k_hold:
+        elif pygame.K_DOWN in Globals.input.k_hold:
             if self.tilt > self.tilt_min:
                 self.tilt -= 1
                 self.on_rotate()
 
-        if 4 in self.gl.input.m_pressed:
+        if 4 in Globals.input.m_pressed:
             if self.straigt + self.straigt_delta <= self.straigt_max:
                 self.straigt += self.straigt_delta
-            print(self.straigt)
-        elif 5 in self.gl.input.m_pressed:
+        elif 5 in Globals.input.m_pressed:
             if self.straigt - self.straigt_delta >= self.straigt_min:
                 self.straigt -= self.straigt_delta
-            print(self.straigt)
 
-        if pygame.K_SPACE in self.gl.input.k_pressed: # or pygame.K_SPACE in self.gl.input.k_hold:
-            x = self.rotation_center[0] + self.pivot.x + self.ball_spawn.dxy * math.cos(math.radians(self.tilt))
-            y = self.rotation_center[1] - self.pivot.y - self.ball_spawn.dxy * math.sin(math.radians(self.tilt))
+        if pygame.K_SPACE in Globals.input.k_pressed: # or pygame.K_SPACE in Globals.input.k_hold:
+            x = self.gun_rotc.x + self.pivot.x + self.ball_spawn.dxy * math.cos(math.radians(self.tilt))
+            y = self.gun_rotc.y - self.pivot.y - self.ball_spawn.dxy * math.sin(math.radians(self.tilt))
             # print(self.rotation_center, x, y)
             x_vel = self.straigt * math.cos(math.radians(self.tilt))
             y_vel = self.straigt * math.sin(math.radians(self.tilt))
-            new_ball = CannonBall((x, y), x_vel, y_vel)
-            self.gl.spr_alive.add(new_ball)
+            new_ball = CannonBall((x, y), x_vel, y_vel, self.img_ball)
+            Globals.spr_alive.add(new_ball)
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.gun_rot, (self.rot_rect.x, self.rot_rect.y))
-        screen.blit(self.platform, (self.pl_rect.x, self.pl_rect.y))
+        screen.blit(self.img_platform, (self.pl_rect.x, self.pl_rect.y))
