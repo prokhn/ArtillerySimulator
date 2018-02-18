@@ -25,7 +25,7 @@ class Globals:
 
     # --------- Cannons ----------
     cannons = []
-    cannon_current = 3
+    cannon_current = 0
     # ----------------------------
 
     # -------- Game Logic --------

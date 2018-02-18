@@ -1,8 +1,8 @@
-import pygame
+import pygame, time
 from GlobalVariables import Globals
 
 class CannonBall(pygame.sprite.Sprite):
-    def __init__(self, x, y, vel_x, vel_y, image, groups=None):
+    def __init__(self, x, y, vel_x, vel_y, image, alive_time=2, groups=None):
         if groups:
             super().__init__(groups)
         else:
@@ -16,6 +16,9 @@ class CannonBall(pygame.sprite.Sprite):
         self.vel_x = vel_x
         self.vel_y = vel_y
 
+        self.alive_time = alive_time
+        self.freezed_time = None
+
         self.gl = Globals()
 
         self.freezed = False
@@ -23,6 +26,8 @@ class CannonBall(pygame.sprite.Sprite):
 
     def update(self, *args):
         if self.freezed:
+            if time.time() - self.freezed_time >= self.alive_time:
+                self.kill()
             return
         self.vel_y -= self.gl.gravity / self.gl.fps
         if self.vel_x - self.gl.air_friction / self.gl.fps > 0:
@@ -36,4 +41,5 @@ class CannonBall(pygame.sprite.Sprite):
         if self.rect.x > self.gl.scr_width or self.rect.y + self.rect.height > Globals.gun_bottom:
             self.rect.y = Globals.gun_bottom - self.rect.height
             self.freezed = True
+            self.freezed_time = time.time()
             # self.kill()
