@@ -31,6 +31,8 @@ class Globals:
     # -------- Game Logic --------
     gravity = 25
     air_friction = 1
+    gun_left = 10
+    gun_bottom = 960
     spr_alive = pygame.sprite.Group()
     sprites_groups = [spr_alive]
     # ----------------------------
