@@ -110,12 +110,23 @@ class Cannon(pygame.sprite.Sprite):
                 self.straigt -= self.straigt_delta
 
         if pygame.K_SPACE in Globals.input.k_pressed: # or pygame.K_SPACE in Globals.input.k_hold:
+            # Это чертова тригонометрия
+            # Не лезь, дибил курва сраный, она сожрет тебя!!!
+            # Это не шутки, дружище, поверь, тут тебе не стандратная конструкция
+            # Это самый настоящий ад!!!
             x = self.pivot.x + self.gun_rotc.x + self.ball_spawn.dxy * math.cos(math.radians(self.tilt))
             y = self.pivot.y - self.gun_rotc.y - self.ball_spawn.dxy * math.sin(math.radians(self.tilt))
-            # print(self.rotation_center, x, y)
+            x -= self.ball_spawn.y * math.sin(math.radians(self.tilt))
+            y -= self.ball_spawn.y * math.cos(math.radians(self.tilt))
+            # Ты еще жив?
+            # Тогда держи на закуску еще двоих
             x_vel = self.straigt * math.cos(math.radians(self.tilt))
             y_vel = self.straigt * math.sin(math.radians(self.tilt))
-            new_ball = CannonBall((x, y), x_vel, y_vel, self.img_ball)
+            # ЧЕРТОВА ТРИГОНОМЕТРИЯ, ДЖОННИ, ОНА ПРЯЧЕТСЯ В КОДЕ!
+            # Впрочем, опасность миновала
+            # Кажется, у нас почти нет потерь
+            # Продолжаем вести наблюдение
+            new_ball = CannonBall(x, y, x_vel, y_vel, self.img_ball)
             Globals.spr_alive.add(new_ball)
 
     def draw(self, screen: pygame.Surface):

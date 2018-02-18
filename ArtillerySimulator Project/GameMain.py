@@ -1,4 +1,4 @@
-import pygame, random
+import pygame
 from GlobalVariables import Globals
 from ImageLoader import ImageLoader
 from Engine.CannonLoader import CannonLoader
@@ -26,11 +26,15 @@ class Game:
                                    ('cannon_1_pl',  'cannon_1_pl.png'),
                                    ('cannon_2',     'cannon_2.png'),
                                    ('cannon_2_pl',  'cannon_2_pl.png'),
+                                   ('cannon_3', 'cannon_3.png'),
+                                   ('cannon_3_pl', 'cannon_3_pl.png'),
                                    ('ball_0',       'ball_1.png')])
         cnl = CannonLoader('data/')
         Globals.cannons = cnl.load(['cannon_0.json',
                                     'cannon_1.json',
-                                    'cannon_2.json'])
+                                    'cannon_2.json',
+                                    'cannon_3.json'])
+        Globals.logger('o', 'Game.on_load() ok. Loaded {} cannons'.format(len(Globals.cannons)))
 
 
 
@@ -54,7 +58,6 @@ class Game:
         grass.set_pos(0, ground.rect.y - grass.rect.height)
 
         cannon = Globals.cannons[Globals.cannon_current]
-        print(Globals.cannons)
         # cannon = Cannon(0, 0)
         # cannon.pl_rect.x = 10
         # cannon.pl_rect.y = ground.rect.y - cannon.pl_rect.height

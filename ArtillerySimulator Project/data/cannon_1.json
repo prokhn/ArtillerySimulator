@@ -8,7 +8,7 @@
   "straigt_min": 10,
   "straigt_max": 20,
   "straigt_delta": 2,
-  "gun_rotc": "(-65, 0)",
+  "gun_rotc": "(-35, 0)",
   "plt_rotc": "(66, 14)",
   "ball_spawn": "(70, 0)",
   "img_gun": "cannon_1",
