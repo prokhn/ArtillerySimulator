@@ -1,0 +1,17 @@
+{
+  "name": "Cannon 2",
+  "tilt": 0,
+  "tilt_min": 0,
+  "tilt_max": 50,
+  "tilt_delta": 1,
+  "straigt": 60,
+  "straigt_min": 10,
+  "straigt_max": 60,
+  "straigt_delta": 2,
+  "gun_rotc": "(-50, 0)",
+  "plt_rotc": "(66, 14)",
+  "ball_spawn": "(90, 0)",
+  "img_gun": "cannon_2",
+  "img_platform": "cannon_2_pl",
+  "img_ball": "ball_0"
+}

@@ -121,3 +121,6 @@ class Cannon(pygame.sprite.Sprite):
     def draw(self, screen: pygame.Surface):
         screen.blit(self.gun_rot, (self.rot_rect.x, self.rot_rect.y))
         screen.blit(self.img_platform, (self.pl_rect.x, self.pl_rect.y))
+
+    def __repr__(self):
+        return '<Cannon "{}">'.format(self.name)

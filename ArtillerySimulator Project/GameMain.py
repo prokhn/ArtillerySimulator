@@ -28,7 +28,9 @@ class Game:
                                    ('cannon_2_pl',  'cannon_2_pl.png'),
                                    ('ball_0',       'ball_1.png')])
         cnl = CannonLoader('data/')
-        Globals.cannons = cnl.load(['cannon_0.json'])
+        Globals.cannons = cnl.load(['cannon_0.json',
+                                    'cannon_1.json',
+                                    'cannon_2.json'])
 
 
 
@@ -51,7 +53,8 @@ class Game:
         ground.set_pos(0, gl.scr_height - ground.rect.height)
         grass.set_pos(0, ground.rect.y - grass.rect.height)
 
-        cannon = Globals.cannons[0]
+        cannon = Globals.cannons[Globals.cannon_current]
+        print(Globals.cannons)
         # cannon = Cannon(0, 0)
         # cannon.pl_rect.x = 10
         # cannon.pl_rect.y = ground.rect.y - cannon.pl_rect.height
@@ -66,6 +69,16 @@ class Game:
                 gl.input.quit = True
             elif gl.input.quit:
                 running = False
+
+            if pygame.K_EQUALS in gl.input.k_pressed:
+                if Globals.cannon_current + 1 < len(Globals.cannons):
+                    Globals.cannon_current += 1
+                    cannon = Globals.cannons[Globals.cannon_current]
+            if pygame.K_MINUS in gl.input.k_pressed:
+                if Globals.cannon_current != 0:
+                    Globals.cannon_current -= 1
+                    cannon = Globals.cannons[Globals.cannon_current]
+
             pygame.display.update()
 
             # gl.screen.blit(background, (0, 0))
