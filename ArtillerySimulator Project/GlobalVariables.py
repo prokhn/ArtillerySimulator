@@ -4,9 +4,9 @@ from Logger import Logger
 
 class Globals:
     # ---------- Screen ----------
-    scr_width = 1280
-    scr_height = 720
-    screen = pygame.display.set_mode((scr_width, scr_height))
+    scr_width = 1920
+    scr_height = 1080
+    screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
     # ----------------------------
 
     # ----------- Images ---------
@@ -23,9 +23,16 @@ class Globals:
     fps = 60
     # ----------------------------
 
+    # --------- Cannons ----------
+    cannons = []
+    cannon_current = 0
+    # ----------------------------
+
     # -------- Game Logic --------
     gravity = 25
     air_friction = 1
+    gun_left = 10
+    gun_bottom = 960
     spr_alive = pygame.sprite.Group()
     sprites_groups = [spr_alive]
     # ----------------------------
