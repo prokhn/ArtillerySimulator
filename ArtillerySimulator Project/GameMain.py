@@ -4,6 +4,7 @@ from ImageLoader import ImageLoader
 from Engine.CannonLoader import CannonLoader
 from GameClasses.Cannon import Cannon
 from GameClasses.Coin import Coin
+from GameClasses.Target import Target
 from GameClasses.Sprite import Sprite
 from UI.GunButton import GunButton
 
@@ -37,7 +38,10 @@ class Game:
                                    ('cannon_2_pl',  'cannon_2_pl.png'),
                                    ('cannon_3',     'cannon_3.png'),
                                    ('cannon_3_pl',  'cannon_3_pl.png'),
-                                   ('ball_0',       'ball_1.png')])
+                                   ('ball_0',       'ball_1.png'),
+                                   ('target_bronze','target_bronze.png'),
+                                   ('target_silver','target_silver.png'),
+                                   ('target_gold',  'target_gold.png')])
         # ---------- UI ----------
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
@@ -66,6 +70,7 @@ class Game:
         self.init_ui()
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
+        sprg_targets = pygame.sprite.Group()
         sprg_fg = pygame.sprite.Group()     # Foreground sprites
 
         # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
@@ -80,6 +85,14 @@ class Game:
 
         cannon = Globals.cannons[Globals.cannon_current]
         cannon_curr = Globals.cannon_current
+
+        target_bronze = Target(Globals.targets_params['bronze'])
+        target_silver = Target(Globals.targets_params['silver'])
+        target_gold =   Target(Globals.targets_params['gold'])
+
+        sprg_targets.add(target_bronze)
+        sprg_targets.add(target_silver)
+        sprg_targets.add(target_gold)
 
         running = True
         while running:
@@ -110,6 +123,9 @@ class Game:
             for sp_group in Globals.sprites_groups:
                 sp_group.update()
                 sp_group.draw(Globals.screen)
+
+            sprg_targets.update()
+            sprg_targets.draw(Globals.screen)
 
             cannon.update()
             cannon.draw(Globals.screen)

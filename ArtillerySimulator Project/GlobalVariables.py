@@ -30,9 +30,13 @@ class Globals:
     cannon_current = 0
     # Cannon.name: [button_icon, icon_borders, cannon_number, score_to_unlock, price]
     cannons_params = {'Cannon 0': ['cannon_0_icon', 10, 0, 0, 0],
-                      'Cannon 1': ['cannon_1_icon', 10, 1, 0, 0],
-                      'Cannon 2': ['cannon_2_icon', 10, 2, 0, 0],
-                      'Cannon 3': ['cannon_3_icon', 10, 3, 1, 0]}
+                      'Cannon 1': ['cannon_1_icon', 10, 1, 10, 0],
+                      'Cannon 2': ['cannon_2_icon', 10, 2, 20, 0],
+                      'Cannon 3': ['cannon_3_icon', 10, 3, 30, 0]}
+    # Targets - rang: [img_tag, score_adds, minx, maxx, miny, maxy]
+    targets_params = {'bronze': ['target_bronze', 5, 275, 700, 100, 900],
+                      'silver': ['target_silver', 10, 900, 1500, 200, 800],
+                      'gold':   ['target_gold', 20, 1600, 1860, 150, 800]}
     # ----------------------------
 
     # -------- Game Logic --------
