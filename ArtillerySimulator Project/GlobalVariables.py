@@ -28,9 +28,16 @@ class Globals:
     # --------- Cannons ----------
     cannons = []
     cannon_current = 0
+    # Cannon.name: [button_icon, icon_borders, cannon_number, score_to_unlock, price]
+    cannons_params = {'Cannon 0': ['cannon_0_icon', 10, 0, 0, 0],
+                      'Cannon 1': ['cannon_1_icon', 10, 1, 0, 0],
+                      'Cannon 2': ['cannon_2_icon', 10, 2, 0, 0],
+                      'Cannon 3': ['cannon_3_icon', 10, 3, 1, 0]}
     # ----------------------------
 
     # -------- Game Logic --------
+    score = 0
+    money = 0
     gravity = 25
     air_friction = 1
     gun_left = 10

@@ -12,15 +12,12 @@ class Game:
         pass
 
     def init_ui(self):
-        icons = {'Cannon 0': 'cannon_0_icon',
-                 'Cannon 1': 'cannon_1_icon',
-                 'Cannon 2': 'cannon_2_icon',
-                 'Cannon 3': 'cannon_3_icon'}
         x = 300
         can_number = 0
         for cannon in Globals.cannons:
-            btn = GunButton(x, 'left', 10, 'bottom', 'ui_btn_gun', can_number, 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
-            btn.set_icon(icons[cannon.name], 10)
+            btn = GunButton(x, 'left', 10, 'bottom', 'ui_btn_gun',
+                            Globals.cannons_params[cannon.name],
+                            'ui_btn_gun_locked', 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
             x += btn.rect.width + 5
             can_number += 1
             Globals.ui.add(btn)
@@ -44,7 +41,8 @@ class Game:
         # ---------- UI ----------
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
-                                        ('ui_btn_gun_pressed', 'ui_btn_gun_pressed.png')]))
+                                        ('ui_btn_gun_pressed', 'ui_btn_gun_pressed.png'),
+                                        ('ui_btn_gun_locked', 'ui_btn_gun_locked.png')]))
         # ------- UI Icons -------
         Globals.images.update(iml.load([('cannon_0_icon', 'cannon_0_icon.png'),
                                         ('cannon_1_icon', 'cannon_1_icon.png'),
