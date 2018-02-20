@@ -92,7 +92,8 @@ class Cannon(pygame.sprite.Sprite):
 
     def update(self, *args):
         if 1 in Globals.input.m_pressed:
-            print(Globals.input.m_pos)
+            pass
+            # print(Globals.input.m_pos)
         if pygame.K_UP in Globals.input.k_hold:
             if self.tilt < self.tilt_max:
                 self.tilt += 1

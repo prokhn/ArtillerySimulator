@@ -1,6 +1,7 @@
 import pygame
 from InputHandler import Input
 from Logger import Logger
+from UI.UIHandler import UIHandler
 
 class Globals:
     # ---------- Screen ----------
@@ -16,6 +17,7 @@ class Globals:
     # --------- Classes ----------
     input = Input()
     logger = Logger()
+    ui = UIHandler()
     # ----------------------------
 
     # ----------- Time -----------
