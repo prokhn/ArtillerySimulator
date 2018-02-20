@@ -41,7 +41,10 @@ class Game:
                                    ('ball_0',       'ball_1.png'),
                                    ('target_bronze','target_bronze.png'),
                                    ('target_silver','target_silver.png'),
-                                   ('target_gold',  'target_gold.png')])
+                                   ('target_gold',  'target_gold.png'),
+                                   ('coin_1',       'coin_1.png'),
+                                   ('coin_2',       'coin_2.png'),
+                                   ('coin_3',       'coin_3.png')])
         # ---------- UI ----------
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
@@ -70,7 +73,6 @@ class Game:
         self.init_ui()
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
-        sprg_targets = pygame.sprite.Group()
         sprg_fg = pygame.sprite.Group()     # Foreground sprites
 
         # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
@@ -90,9 +92,12 @@ class Game:
         target_silver = Target(Globals.targets_params['silver'])
         target_gold =   Target(Globals.targets_params['gold'])
 
-        sprg_targets.add(target_bronze)
-        sprg_targets.add(target_silver)
-        sprg_targets.add(target_gold)
+        coin_1 = Coin(Globals.coins_params['coin_1'])
+        coin_2 = Coin(Globals.coins_params['coin_2'])
+        coin_3 = Coin(Globals.coins_params['coin_3'])
+
+        Globals.spr_targets.add(target_bronze, target_silver, target_gold)
+        Globals.spr_coins.add(coin_1, coin_2, coin_3)
 
         running = True
         while running:
@@ -124,8 +129,10 @@ class Game:
                 sp_group.update()
                 sp_group.draw(Globals.screen)
 
-            sprg_targets.update()
-            sprg_targets.draw(Globals.screen)
+            Globals.spr_targets.update()
+            Globals.spr_targets.draw(Globals.screen)
+            Globals.spr_coins.update()
+            Globals.spr_coins.draw(Globals.screen)
 
             cannon.update()
             cannon.draw(Globals.screen)

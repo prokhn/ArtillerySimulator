@@ -15,11 +15,16 @@ class Target(pygame.sprite.Sprite):
         new_y = random.randint(self.miny, self.maxy)
         self.rect.x = new_x
         self.rect.y = new_y
-        print(self.rect)
+        for spr in Globals.spr_coins:
+            if self.rect.colliderect(spr.rect):
+                self.new_place()
+        for spr in Globals.spr_targets:
+            if spr.rect != self.rect:
+                if self.rect.colliderect(spr.rect):
+                    self.new_place()
 
     def update(self, *args):
         super().update(*args)
-        # Globals.logger('o', str(self.rect.collidelist(Globals.spr_alive)))
         for spr in Globals.spr_alive:
             if self.rect.colliderect(spr.rect):
                 spr.kill()
