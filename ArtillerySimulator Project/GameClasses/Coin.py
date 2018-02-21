@@ -1,15 +1,15 @@
-import pygame
+import pygame, random
 from GlobalVariables import Globals
+from GameClasses.CollectableObject import CollectableObject
 
-class Coin(pygame.sprite.Sprite):
-    def __init__(self, x, y, sprite_name, value, groups=None):
-        super().__init__(groups)
-        self.image = Globals.images.get(sprite_name)
-        if self.image is None:
-            Globals.logger('e', 'Coin init: no sprite with name %s' % sprite_name)
-            self.image = Globals.images['basic']
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
 
+class Coin(CollectableObject):
+    def __init__(self, params):
+        image_tag, value, minx, maxx, miny, maxy = params
+        super().__init__(image_tag, minx, maxx, miny, maxy)
         self.value = value
+
+    def on_collect(self):
+        super().on_collect()
+        Globals.money += self.value
+        self.on_destroy()
