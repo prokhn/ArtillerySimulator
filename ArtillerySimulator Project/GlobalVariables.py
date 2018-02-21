@@ -7,7 +7,11 @@ class Globals:
     # ---------- Screen ----------
     scr_width = 1920
     scr_height = 1080
-    screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
+    fullscreen = True
+    if fullscreen:
+        screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((scr_width, scr_height))
     # ----------------------------
 
     # ----------- Images ---------
@@ -53,8 +57,11 @@ class Globals:
     air_friction = 1
     gun_left = 10
     gun_bottom = 960
+    particles_count = 5
+    particles_image_tags = ['particle_1', 'particle_2', 'particle_3', 'particle_4']
     spr_alive = pygame.sprite.Group()
+    spr_particles = pygame.sprite.Group()
     spr_targets = pygame.sprite.Group()
     spr_coins = pygame.sprite.Group()
-    sprites_groups = [spr_alive]
+    sprites_groups = [spr_alive, spr_particles]
     # ----------------------------

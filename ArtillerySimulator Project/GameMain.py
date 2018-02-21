@@ -28,7 +28,6 @@ class Game:
             Globals.ui.add(btn)
             Globals.ui.add(tooltip)
 
-
     def on_load(self):
         iml = ImageLoader('sprites/')
         # ----- Game sprites -----
@@ -50,7 +49,11 @@ class Game:
                                    ('target_gold',  'target_gold.png'),
                                    ('coin_1',       'coin_1.png'),
                                    ('coin_2',       'coin_2.png'),
-                                   ('coin_3',       'coin_3.png')])
+                                   ('coin_3',       'coin_3.png'),
+                                   ('particle_1',  'particle_1.png'),
+                                   ('particle_2', 'particle_2.png'),
+                                   ('particle_3', 'particle_3.png'),
+                                   ('particle_4', 'particle_4.png'),])
         # ---------- UI ----------
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
@@ -81,9 +84,6 @@ class Game:
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
         sprg_fg = pygame.sprite.Group()     # Foreground sprites
-
-        # coin = Coin(100, 100, 'skbvks', 10, all_sprites)
-        #all_sprites.add(cannon)
 
         background = Sprite(0, 0, 'background', sprg_bg)
         ground = Sprite(0, 0, 'ground', sprg_bg)

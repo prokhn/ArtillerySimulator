@@ -26,7 +26,6 @@ class Tooltip:
 
         all_height = sum([text_rect.height for text_rendered, text_rect in self.text_rendered])
         border = max(0, (self.rect.height - all_height - 2 * vert_border) // 2)
-        print(border)
         curr_y = vert_border
         for text_rendered, text_rect in self.text_rendered:
             text_rect.y = self.rect.y + curr_y
