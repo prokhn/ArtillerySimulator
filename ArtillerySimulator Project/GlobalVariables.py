@@ -1,6 +1,6 @@
 import pygame
-from InputHandler import Input
-from Logger import Logger
+from Engine.InputHandler import Input
+from Engine.Logger import Logger
 from UI.UIHandler import UIHandler
 
 class Globals:

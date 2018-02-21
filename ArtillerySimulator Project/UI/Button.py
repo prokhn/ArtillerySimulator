@@ -41,6 +41,7 @@ class Button:
         self.enabled = True
         self.hovered = False
         self.clicked = False
+        self.doing_action = False
 
     def update_coords(self, x=None, x_align=None, y=None, y_align=None):
         if x_align:
@@ -80,18 +81,43 @@ class Button:
         self.icon_rect = self.icon.get_rect()
         self.icon_rect.center = self.rect.center
 
-    def set_text(self, text):
+    def set_text(self, text, font_size=None):
         self.text = text
+        if font_size:
+            self.set_font(font_size)
+
         self.text_rendered = self.font.render(self.text, 10, pygame.Color('black'))
         self.text_rect = self.text_rendered.get_rect()
         self.text_rect.x = self.rect.x
         self.text_rect.y = self.rect.y
+
+    def set_text_rect(self, x, x_align, y, y_align):
+        if x_align == 'left':
+            self.text_rect.x = self.rect.x + x
+        elif x_align == 'center':
+            self.text_rect.centerx = self.rect.centerx
+        elif x_align == 'right':
+            self.text_rect.x = self.rect.x - x
+        else:
+            raise ValueError('Button.set_text_rect(): incorrect x_align - %s' % x_align)
+
+
+        if y_align == 'up':
+            self.text_rect.y = self.rect.y + y
+        elif y_align == 'center':
+            self.text_rect.centery = self.rect.centery
+        elif y_align == 'bottom':
+            self.text_rect.y = self.rect.y - self.rect.height - y
+        else:
+            raise ValueError('Button.set_text_rect(): incorrect y_align - %s' % y_align)
 
     def set_font(self, font_size):
         self.font = pygame.font.Font(None, font_size)
         self.set_text(self.text)
 
     def update(self):
+        if self.doing_action:
+            self.doing_action = False
         if self.enabled:
             if self.rect.collidepoint(*Globals.input.m_pos):
                 if not self.hovered:
@@ -123,6 +149,9 @@ class Button:
         if self.text:
             screen.blit(self.text_rendered, self.text_rect.topleft)
 
+    def action(self):
+        self.doing_action = True
+
     def on_mouse_enter(self):
         self.hovered = True
 
@@ -134,3 +163,5 @@ class Button:
 
     def on_click_out(self, accept_click: bool):
         self.clicked = False
+        if accept_click:
+            self.action()

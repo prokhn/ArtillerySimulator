@@ -14,3 +14,6 @@ class UIHandler():
     def draw(self, surf):
         for el in self.elements:
             el.draw(surf)
+
+    def clear(self):
+        self.elements = []

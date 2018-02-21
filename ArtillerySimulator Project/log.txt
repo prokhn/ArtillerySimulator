@@ -1,1 +1,4 @@
 ✔: Game.on_load() ok. Loaded 4 cannons
+✔: Game.on_load() ok. Loaded 4 cannons
+✔: Game.on_load() ok. Loaded 4 cannons
+✔: Game.on_load() ok. Loaded 4 cannons
