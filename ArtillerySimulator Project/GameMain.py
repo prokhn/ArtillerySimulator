@@ -7,6 +7,7 @@ from GameClasses.Coin import Coin
 from GameClasses.Target import Target
 from GameClasses.Sprite import Sprite
 from UI.GunButton import GunButton
+from UI.Tooltip import Tooltip
 
 class Game:
     def __init__(self):
@@ -19,9 +20,14 @@ class Game:
             btn = GunButton(x, 'left', 10, 'bottom', 'ui_btn_gun',
                             Globals.cannons_params[cannon.name],
                             'ui_btn_gun_locked', 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
+            tooltip = Tooltip(btn, 0, -100, 'ui_tooltip', ['Name: %s' % cannon.name,
+                                                           'Score to unlock: %s' % btn.score_unlock,
+                                                           'Price %s' % btn.price])
             x += btn.rect.width + 5
             can_number += 1
             Globals.ui.add(btn)
+            Globals.ui.add(tooltip)
+
 
     def on_load(self):
         iml = ImageLoader('sprites/')
@@ -49,7 +55,8 @@ class Game:
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
                                         ('ui_btn_gun_pressed', 'ui_btn_gun_pressed.png'),
-                                        ('ui_btn_gun_locked', 'ui_btn_gun_locked.png')]))
+                                        ('ui_btn_gun_locked',  'ui_btn_gun_locked.png'),
+                                        ('ui_tooltip',             'ui_tooltip.png')]))
         # ------- UI Icons -------
         Globals.images.update(iml.load([('cannon_0_icon', 'cannon_0_icon.png'),
                                         ('cannon_1_icon', 'cannon_1_icon.png'),
