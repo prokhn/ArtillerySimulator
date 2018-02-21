@@ -45,14 +45,14 @@ class Globals:
                       'silver': ['target_silver', 10, 900, 1500, 200, 800],
                       'gold':   ['target_gold', 20, 1600, 1860, 150, 800]}
     # Coins   - Coin_name: [img_tag, value, minx, maxx, miny, maxy]
-    coins_params = {'coin_1': ['coin_1', 1, 100, 1850, 100, 800],
+    coins_params = {'coin_1': ['coin_1', 1, 100, 1300, 100, 800],
                     'coin_2': ['coin_2', 2, 700, 1850, 50, 600],
                     'coin_3': ['coin_3', 3, 1500, 1850, 10, 400]}
     # ----------------------------
 
     # -------- Game Logic --------
-    score = 100
-    money = 100
+    score = 0
+    money = 0
     gravity = 25
     air_friction = 1
     gun_left = 10
