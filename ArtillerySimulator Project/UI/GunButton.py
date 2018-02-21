@@ -31,3 +31,4 @@ class GunButton(Button):
         if accept_click:
             if not self.locked:
                 Globals.cannon_current = self.cannon_num
+                Globals.money -= self.price

@@ -19,7 +19,7 @@ class Tooltip:
         self.text_rows = text_rows
         self.text_rendered = []
         for text in text_rows:
-            text_rendered = self.font.render(text, 0, pygame.Color('black'))
+            text_rendered = self.font.render(text, 10, pygame.Color('black'))
             text_rect = text_rendered.get_rect()
             text_rect.x = self.rect.x + hor_border
             self.text_rendered.append((text_rendered, text_rect))

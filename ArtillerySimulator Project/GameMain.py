@@ -7,6 +7,7 @@ from GameClasses.Coin import Coin
 from GameClasses.Target import Target
 from GameClasses.Sprite import Sprite
 from UI.GunButton import GunButton
+from UI.TextLabel import TextLabel
 from UI.Tooltip import Tooltip
 
 class Game:
@@ -22,11 +23,20 @@ class Game:
                             'ui_btn_gun_locked', 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
             tooltip = Tooltip(btn, 0, -100, 'ui_tooltip', ['Name: %s' % cannon.name,
                                                            'Score to unlock: %s' % btn.score_unlock,
-                                                           'Price %s' % btn.price])
+                                                           'Price: %s' % btn.price])
             x += btn.rect.width + 5
             can_number += 1
             Globals.ui.add(btn)
             Globals.ui.add(tooltip)
+
+
+        ui_score = TextLabel(20, 'left', 10, 'up')
+        ui_score.set_font(50)
+        ui_coins = TextLabel(20, 'left', 10 + ui_score.text_rect.height + 10, 'up')
+        ui_coins.set_font(50)
+        ui_straight = TextLabel(20, 'left', Globals.gun_bottom + 10, 'up')
+        Globals.ui.add(ui_score, ui_coins, ui_straight)
+        return ui_score, ui_coins, ui_straight
 
     def on_load(self):
         iml = ImageLoader('sprites/')
@@ -80,7 +90,7 @@ class Game:
         pygame.init()
 
         self.on_load()
-        self.init_ui()
+        ui_score, ui_coins, ui_straight = self.init_ui()
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
         sprg_fg = pygame.sprite.Group()     # Foreground sprites
@@ -127,6 +137,12 @@ class Game:
             if cannon_curr != Globals.cannon_current:
                 cannon = Globals.cannons[Globals.cannon_current]
                 cannon_curr = Globals.cannon_current
+
+            ui_score.set_text('Score: %s' % Globals.score)
+            ui_coins.set_text('Money: %s' % Globals.money)
+            ui_straight.set_text('Straight: {} - {} to {}'.format(cannon.straigt,
+                                                                          cannon.straigt_min,
+                                                                          cannon.straigt_max))
 
             pygame.display.update()
 

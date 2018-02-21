@@ -12,8 +12,12 @@ class Button:
         self.x_align = x_align
         self.y_align = y_align
 
-        self.img_bg = Globals.images[img_bg]
-        self.rect = self.img_bg.get_rect()
+        if img_bg:
+            self.img_bg = Globals.images[img_bg]
+            self.rect = self.img_bg.get_rect()
+        else:
+            self.img_bg = None
+            self.rect = pygame.Rect(x, y, 0, 0)
         if img_bg_hovered:
             self.img_bg_hovered = Globals.images[img_bg_hovered]
         else:
@@ -23,12 +27,16 @@ class Button:
         else:
             self.img_bg_pressed = None
 
+        self.update_coords(x, x_align, y, y_align)
+
         self.icon = None
         self.icon_rect = pygame.Rect(0, 0, 0, 0)
-        self.text = None
-        self.font = pygame.font.Font(None, 10)
-
-        self.update_coords(x, x_align, y, y_align)
+        self.text = ''
+        self.font = pygame.font.Font(None, 30)
+        self.text_rendered = self.font.render(self.text, 1, pygame.Color('black'))
+        self.text_rect = self.text_rendered.get_rect()
+        self.text_rect.centerx = self.rect.centerx
+        self.text_rect.centery = self.rect.centery
 
         self.enabled = True
         self.hovered = False
@@ -72,13 +80,18 @@ class Button:
         self.icon_rect = self.icon.get_rect()
         self.icon_rect.center = self.rect.center
 
-    def set_text(self):
-        pass
+    def set_text(self, text):
+        self.text = text
+        self.text_rendered = self.font.render(self.text, 10, pygame.Color('black'))
+        self.text_rect = self.text_rendered.get_rect()
+        self.text_rect.x = self.rect.x
+        self.text_rect.y = self.rect.y
+
+    def set_font(self, font_size):
+        self.font = pygame.font.Font(None, font_size)
+        self.set_text(self.text)
 
     def update(self):
-        # self.img_bg = pygame.Surface()
-        # self.rect = pygame.Rect()
-
         if self.enabled:
             if self.rect.collidepoint(*Globals.input.m_pos):
                 if not self.hovered:
@@ -97,7 +110,8 @@ class Button:
                     self.on_click_out(False)
 
     def draw(self, screen: pygame.Surface):
-        screen.blit(self.img_bg, self.rect.topleft)
+        if self.img_bg:
+            screen.blit(self.img_bg, self.rect.topleft)
         if self.hovered:
             if self.img_bg_hovered:
                 screen.blit(self.img_bg_hovered, self.rect.topleft)
@@ -107,7 +121,7 @@ class Button:
         if self.icon:
             screen.blit(self.icon, self.icon_rect.topleft)
         if self.text:
-            self.font.render(self.text, 0, pygame.Color('white'))
+            screen.blit(self.text_rendered, self.text_rect.topleft)
 
     def on_mouse_enter(self):
         self.hovered = True
