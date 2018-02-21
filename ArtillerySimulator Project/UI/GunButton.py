@@ -12,6 +12,7 @@ class GunButton(Button):
         self.price = params[4]
         self.img_bg_locked = Globals.images[img_bg_locked]
         self.locked = True
+        self.was_bought = False
         self.update()
 
     def update(self):
@@ -31,4 +32,6 @@ class GunButton(Button):
         if accept_click:
             if not self.locked:
                 Globals.cannon_current = self.cannon_num
-                Globals.money -= self.price
+                if not self.was_bought:
+                    Globals.money -= self.price
+                    self.was_bought = True
