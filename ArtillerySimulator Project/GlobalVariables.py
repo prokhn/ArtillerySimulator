@@ -51,8 +51,8 @@ class Globals:
     # ----------------------------
 
     # -------- Game Logic --------
-    score = 0
-    money = 0
+    score = 100
+    money = 100
     gravity = 25
     air_friction = 1
     gun_left = 10
