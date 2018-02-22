@@ -26,7 +26,7 @@ class Menu:
         Globals.images.update(iml.load([('background', 'background_menu.png'),
                                         ('ui_button',  'ui_menubutton.png'),
                                         ('ui_button_h', 'ui_menubutton_h.png'),
-                                        ('ui_button_p', 'ui_menubutton_p.png'),]))
+                                        ('ui_button_p', 'ui_menubutton_p.png')]))
 
     def run(self):
         pygame.init()

@@ -1,7 +1,8 @@
-import pygame
+import pygame, importlib
 from GlobalVariables import Globals
-from Scenes.Menu import Menu
 from Scenes.Game import Game
+from Scenes.Menu import Menu
+from Scenes.StartScreen import StartScreen
 
 
 class ScenesManager:
@@ -18,19 +19,25 @@ class ScenesManager:
         Globals.spr_coins.empty()
         Globals.ui.clear()
 
+    def start(self):
+        curr_scene = StartScreen()
+        exit_code = curr_scene.run()
+        if exit_code == 1:
+            return
+        elif exit_code == 2:
+            self.run()
+
     def run(self):
         self.on_new_scene()
         curr_scene = Menu()
         exit_code = curr_scene.run()
         if exit_code == 1:
-            pygame.quit()
             return
         elif exit_code == 2:
             self.on_new_scene()
             curr_scene = Game()
             exit_code = curr_scene.run()
             if exit_code == 1:
-                pygame.quit()
                 return
             elif exit_code == 2:
                 self.run()
@@ -38,3 +45,4 @@ class ScenesManager:
 if __name__ == '__main__':
     game = ScenesManager()
     game.run()
+    pygame.quit()

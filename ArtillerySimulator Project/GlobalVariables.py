@@ -2,15 +2,12 @@ import pygame
 from Engine.InputHandler import Input
 from Engine.Logger import Logger
 from UI.UIHandler import UIHandler
+from Constants import *
 
-ABS_W = 1920
-ABS_H = 1080
-SCR_W = 1920
-SCR_H = 1080
-scr_scale = SCR_W / ABS_W
+
 
 def scale(num: int):
-    return int(num * scr_scale)
+    return int(num * SCR_SCALE)
 
 class Globals:
     # ---------- Screen ----------
@@ -19,7 +16,7 @@ class Globals:
     scr_width = SCR_W
     scr_height = SCR_H
     scr_scale = scr_width / scr_abs_w
-    fullscreen = True
+    fullscreen = FULLSCREEN
     if fullscreen:
         screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
     else:
@@ -69,6 +66,7 @@ class Globals:
     air_friction = 1
     gun_left = scale(10)
     gun_bottom = scale(960)
+    print(gun_bottom)
     particles_count = 7
     particles_image_tags = ['particle_1', 'particle_2', 'particle_3', 'particle_4']
     spr_alive = pygame.sprite.Group()
