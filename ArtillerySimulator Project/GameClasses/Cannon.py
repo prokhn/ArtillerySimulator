@@ -1,5 +1,5 @@
 import pygame, math
-from GlobalVariables import Globals
+from GlobalVariables import Globals, scale
 from GameClasses.CannonBall import CannonBall
 
 def arg_strip(arg):
@@ -14,6 +14,8 @@ class Pivot:
         self.set_new(x, y)
 
     def set_new(self, x, y):
+        # self.x = scale(x)
+        # self.y = scale(y)
         self.x = x
         self.y = y
         if x == 0 and y == 0:
@@ -30,25 +32,6 @@ class Pivot:
 class Cannon(pygame.sprite.Sprite):
     def __init__(self, params):
         super().__init__()
-
-        '''
-        # Different values for all cannons
-        self.tilt = Globals.mass[Globals.gan_number][2]           # Начальный наклон пушки
-        self.tilt_min = Globals.mass[Globals.gan_number][3]      # Минимальный наклон
-        self.tilt_max = Globals.mass[Globals.gan_number][4]    # Максимальный наклон
-        self.tilt_delta = Globals.mass[Globals.gan_number][5]     # Прибавка к наклону за одно нажатие клавиши
-        self.straigt = Globals.mass[Globals.gan_number][6]       # Скорость вылетающего снаряда
-        self.straigt_min = Globals.mass[Globals.gan_number][7]   # Минимальная
-        self.straigt_max = Globals.mass[Globals.gan_number][8]   # Максимальная
-        self.straigt_delta = Globals.mass[Globals.gan_number][9]  # Прибавка за раз
-        self.rotation_center = Globals.mass[Globals.gan_number][10]        # Центр вращения пушки
-        self.pivot = Pivot(Globals.mass[Globals.gan_number][11])              # Координаты точки вращения пушки относительно центра
-        self.ball_spawn = Pivot(Globals.mass[Globals.gan_number][12])         # Координаты спавна шарика отностительно центра
-        self.platform = Globals.images[Globals.mass[Globals.gan_number][0]]    # Картинка платформы
-        self.gun = Globals.images[Globals.mass[Globals.gan_number][1]]     # Картинка пушки
-        # ----------------------------------------
-        '''
-
         # ---------------------------------------------
         self.name = params['name']
         self.tilt = params['tilt']                      # Начальный наклон пушки
@@ -66,6 +49,9 @@ class Cannon(pygame.sprite.Sprite):
         self.img_platform = Globals.images[params['img_platform']]      # Картинка платформы
         self.img_ball = Globals.images[params['img_ball']]              # Картинка снаряда
         # ---------------------------------------------
+        self.gun_rotc.set_new(scale(self.gun_rotc.x), scale(self.gun_rotc.y))
+        self.plt_rotc.set_new(scale(self.plt_rotc.x), scale(self.plt_rotc.y))
+        self.ball_spawn.set_new(scale(self.ball_spawn.x), scale(self.ball_spawn.y))
 
         self.pl_rect = self.img_platform.get_rect()
         self.pl_rect.x = Globals.gun_left
@@ -75,7 +61,7 @@ class Cannon(pygame.sprite.Sprite):
 
         self.gun_rot = self.img_gun
         self.pivot = Pivot(x=self.pl_rect.x + self.plt_rotc.x - self.gun_rotc.x,
-                           y= self.pl_rect.y + self.plt_rotc.y - self.gun_rotc.y)
+                           y=self.pl_rect.y + self.plt_rotc.y - self.gun_rotc.y)
 
 
         self.rot_rect = self.gun_rot.get_rect()
@@ -121,8 +107,8 @@ class Cannon(pygame.sprite.Sprite):
             y -= self.ball_spawn.y * math.cos(math.radians(self.tilt))
             # Ты еще жив?
             # Тогда держи на закуску еще двоих
-            x_vel = self.straigt * math.cos(math.radians(self.tilt))
-            y_vel = self.straigt * math.sin(math.radians(self.tilt))
+            x_vel = scale(self.straigt) * math.cos(math.radians(self.tilt))
+            y_vel = scale(self.straigt) * math.sin(math.radians(self.tilt))
             # ЧЕРТОВА ТРИГОНОМЕТРИЯ, ДЖОННИ, ОНА ПРЯЧЕТСЯ В КОДЕ!
             # Впрочем, опасность миновала
             # Кажется, у нас почти нет потерь

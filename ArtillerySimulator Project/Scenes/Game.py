@@ -1,5 +1,5 @@
 import pygame
-from GlobalVariables import Globals
+from GlobalVariables import Globals, scale
 from Engine.ImageLoader import ImageLoader
 from Engine.CannonLoader import CannonLoader
 from GameClasses.Coin import Coin
@@ -9,31 +9,33 @@ from UI.GunButton import GunButton
 from UI.TextLabel import TextLabel
 from UI.Tooltip import Tooltip
 
+
 class Game:
     def __init__(self):
         pass
 
     def init_ui(self):
-        x = 300
+        x = scale(300)
         can_number = 0
         for cannon in Globals.cannons:
-            btn = GunButton(x, 'left', 10, 'bottom', 'ui_btn_gun',
+            btn = GunButton(x, 'left', scale(10), 'bottom', 'ui_btn_gun',
                             Globals.cannons_params[cannon.name],
                             'ui_btn_gun_locked', 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
-            tooltip = Tooltip(btn, 0, -100, 'ui_tooltip', ['Name: %s' % cannon.name,
+            tooltip = Tooltip(btn, 0, scale(-100), 'ui_tooltip', ['Name: %s' % cannon.name,
                                                            'Score to unlock: %s' % btn.score_unlock,
                                                            'Price: %s' % btn.price])
-            x += btn.rect.width + 5
+            x += btn.rect.width + scale(5)
             can_number += 1
             Globals.ui.add(btn)
             Globals.ui.add(tooltip)
 
 
-        ui_score = TextLabel(20, 'left', 10, 'up')
+        ui_score = TextLabel(scale(20), 'left', scale(10), 'up')
         ui_score.set_font(50)
-        ui_coins = TextLabel(20, 'left', 10 + ui_score.text_rect.height + 10, 'up')
+        ui_coins = TextLabel(scale(20), 'left', scale(20) + ui_score.text_rect.height, 'up')
         ui_coins.set_font(50)
-        ui_straight = TextLabel(20, 'left', Globals.gun_bottom + 10, 'up')
+        ui_straight = TextLabel(scale(20), 'left', scale(10) + Globals.gun_bottom, 'up')
+        ui_straight.set_font(30)
         Globals.ui.add(ui_score, ui_coins, ui_straight)
         return ui_score, ui_coins, ui_straight
 
@@ -68,7 +70,7 @@ class Game:
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
                                         ('ui_btn_gun_pressed', 'ui_btn_gun_pressed.png'),
                                         ('ui_btn_gun_locked',  'ui_btn_gun_locked.png'),
-                                        ('ui_tooltip',             'ui_tooltip.png')]))
+                                        ('ui_tooltip',         'ui_tooltip.png')]))
         # ------- UI Icons -------
         Globals.images.update(iml.load([('cannon_0_icon', 'cannon_0_icon.png'),
                                         ('cannon_1_icon', 'cannon_1_icon.png'),
@@ -131,6 +133,13 @@ class Game:
                 if Globals.cannon_current != 0:
                     Globals.cannon_current -= 1
                     cannon = Globals.cannons[Globals.cannon_current]
+
+            # ------ Cheats ------
+            if pygame.K_m in Globals.input.k_pressed:
+                Globals.money += 20
+            if pygame.K_n in Globals.input.k_pressed:
+                Globals.score += 20
+            # --------------------
 
             if cannon_curr != Globals.cannon_current:
                 cannon = Globals.cannons[Globals.cannon_current]

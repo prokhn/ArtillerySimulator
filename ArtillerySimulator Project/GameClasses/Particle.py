@@ -1,5 +1,5 @@
 import pygame, random
-from GlobalVariables import Globals
+from GlobalVariables import Globals, scale
 
 class Particle(pygame.sprite.Sprite):
     def __init__(self, x, y, x_vel_max, y_vel_max):
@@ -10,8 +10,8 @@ class Particle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.speed_x = random.randint(-x_vel_max, x_vel_max)
-        self.speed_y = random.randint(-10, y_vel_max - 10)
+        self.speed_x = random.randint(scale(-x_vel_max), scale(x_vel_max))
+        self.speed_y = random.randint(scale(-10), (y_vel_max - 10))
 
         self.GRAVITY = Globals.gravity / 2
 

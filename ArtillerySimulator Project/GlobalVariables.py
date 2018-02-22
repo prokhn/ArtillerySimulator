@@ -3,10 +3,22 @@ from Engine.InputHandler import Input
 from Engine.Logger import Logger
 from UI.UIHandler import UIHandler
 
+ABS_W = 1920
+ABS_H = 1080
+SCR_W = 1920
+SCR_H = 1080
+scr_scale = SCR_W / ABS_W
+
+def scale(num: int):
+    return int(num * scr_scale)
+
 class Globals:
     # ---------- Screen ----------
-    scr_width = 1920
-    scr_height = 1080
+    scr_abs_w = ABS_W
+    scr_abs_h = ABS_H
+    scr_width = SCR_W
+    scr_height = SCR_H
+    scr_scale = scr_width / scr_abs_w
     fullscreen = True
     if fullscreen:
         screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
@@ -41,23 +53,23 @@ class Globals:
                       'Cannon 2': ['cannon_2_icon', 10, 2, 20, 0],
                       'Cannon 3': ['cannon_3_icon', 10, 3, 30, 20]}
     # Targets - rang: [img_tag, score_adds, minx, maxx, miny, maxy]
-    targets_params = {'bronze': ['target_bronze', 5, 275, 700, 100, 900],
-                      'silver': ['target_silver', 10, 900, 1500, 200, 800],
-                      'gold':   ['target_gold', 20, 1600, 1860, 150, 800]}
+    targets_params = {'bronze': ['target_bronze', 5,  scale(275),  scale(700),  scale(100), scale(900)],
+                      'silver': ['target_silver', 10, scale(900),  scale(1500), scale(200), scale(800)],
+                      'gold':   ['target_gold',   20, scale(1600), scale(1860), scale(150), scale(800)]}
     # Coins   - Coin_name: [img_tag, value, minx, maxx, miny, maxy]
-    coins_params = {'coin_1': ['coin_1', 1, 100, 1300, 100, 800],
-                    'coin_2': ['coin_2', 2, 700, 1850, 50, 600],
-                    'coin_3': ['coin_3', 3, 1500, 1850, 10, 400]}
+    coins_params = {'coin_1': ['coin_1', 1, scale(100),  scale(1300), scale(100), scale(800)],
+                    'coin_2': ['coin_2', 2, scale(700),  scale(1850), scale(50),  scale(600)],
+                    'coin_3': ['coin_3', 3, scale(1500), scale(1850), scale(10),  scale(400)]}
     # ----------------------------
 
     # -------- Game Logic --------
     score = 0
     money = 0
-    gravity = 25
+    gravity = scale(25)
     air_friction = 1
-    gun_left = 10
-    gun_bottom = 960
-    particles_count = 5
+    gun_left = scale(10)
+    gun_bottom = scale(960)
+    particles_count = 7
     particles_image_tags = ['particle_1', 'particle_2', 'particle_3', 'particle_4']
     spr_alive = pygame.sprite.Group()
     spr_particles = pygame.sprite.Group()

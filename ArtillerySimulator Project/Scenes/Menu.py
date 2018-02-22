@@ -1,5 +1,5 @@
 import pygame
-from GlobalVariables import Globals
+from GlobalVariables import Globals, scale
 from Engine.ImageLoader import ImageLoader
 from UI.UIHandler import UIHandler
 from UI.Button import Button
@@ -10,12 +10,11 @@ class Menu:
         self.ui = UIHandler()
 
     def init_ui(self):
-        self.btn_exit = Button(0, 'center', 20, 'bottom',
+        self.btn_exit = Button(0, 'center', scale(20), 'bottom',
                                        'ui_button', 'ui_button_h', 'ui_button_p')
         self.btn_exit.set_text('EXIT', 50)
         self.btn_exit.set_text_rect(0, 'center', 0, 'center')
-
-        self.btn_play = Button(0, 'center', 25 + self.btn_exit.rect.height, 'bottom',
+        self.btn_play = Button(0, 'center', scale(25) + self.btn_exit.rect.height, 'bottom',
                                        'ui_button', 'ui_button_h', 'ui_button_p')
         self.btn_play.set_text('PLAY', 50)
         self.btn_play.set_text_rect(0, 'center', 0, 'center')

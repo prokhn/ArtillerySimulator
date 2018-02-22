@@ -1,9 +1,11 @@
 import pygame
 from GlobalVariables import Globals
 
+def scale(num: int):
+    return int(num * Globals.scr_scale)
 
 class Tooltip:
-    def __init__(self, ui_listener, dx, dy, img_tag, text_rows, font_size=30):
+    def __init__(self, ui_listener, dx, dy, img_tag, text_rows, font_size=scale(30)):
         self.ui_listener = ui_listener
         self.image = Globals.images[img_tag]
         self.rect = self.image.get_rect()
@@ -15,7 +17,7 @@ class Tooltip:
 
         self.active = True
 
-    def set_text(self, text_rows, hor_border=5, vert_border=5):
+    def set_text(self, text_rows, hor_border=scale(10), vert_border=scale(5)):
         self.text_rows = text_rows
         self.text_rendered = []
         for text in text_rows:
@@ -32,7 +34,7 @@ class Tooltip:
             curr_y += text_rect.height + border
 
     def set_font_size(self, font_size):
-        self.font = pygame.font.Font(None, font_size)
+        self.font = pygame.font.Font(None, scale(font_size))
 
     def update(self):
         if self.ui_listener.hovered or self.ui_listener.clicked:

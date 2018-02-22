@@ -5,6 +5,10 @@ class Button:
     def __init__(self, x, x_align, y, y_align, img_bg, img_bg_hovered=None, img_bg_pressed=None):
         super().__init__()
 
+        # if Globals.scr_scale != 1:
+        #     x = x * Globals.scr_scale
+        #     y = y * Globals.scr_scale
+
         self.x_abs = x
         self.y_abs = y
         self.x = 0
@@ -32,11 +36,12 @@ class Button:
         self.icon = None
         self.icon_rect = pygame.Rect(0, 0, 0, 0)
         self.text = ''
-        self.font = pygame.font.Font(None, 30)
+        self.font = pygame.font.Font(None, int(30 * Globals.scr_scale))
         self.text_rendered = self.font.render(self.text, 1, pygame.Color('black'))
         self.text_rect = self.text_rendered.get_rect()
         self.text_rect.centerx = self.rect.centerx
         self.text_rect.centery = self.rect.centery
+        self.set_text('', int(30 * Globals.scr_scale))
 
         self.enabled = True
         self.hovered = False
@@ -92,6 +97,10 @@ class Button:
         self.text_rect.y = self.rect.y
 
     def set_text_rect(self, x, x_align, y, y_align):
+        if Globals.scr_scale != 1:
+            x = int(x * Globals.scr_scale)
+            y = int(y * Globals.scr_scale)
+            # Globals.logger('o', 'Button.set_text_rect() was scaled')
         if x_align == 'left':
             self.text_rect.x = self.rect.x + x
         elif x_align == 'center':
@@ -112,6 +121,7 @@ class Button:
             raise ValueError('Button.set_text_rect(): incorrect y_align - %s' % y_align)
 
     def set_font(self, font_size):
+        font_size = int(font_size * Globals.scr_scale)
         self.font = pygame.font.Font(None, font_size)
         self.set_text(self.text)
 
