@@ -1,10 +1,13 @@
-import pygame
+import pygame, os
 from GlobalVariables import Globals
 
 
 class ImageLoader:
     def __init__(self, spr_path):
-        self.spr_path = spr_path
+        filepath = os.getcwd()
+        # dir = os.path.dirname(filepath)
+        # self.spr_path = os.path.join(dir, spr_path)
+        self.spr_path = os.path.join(filepath, spr_path)
 
     def load(self, im_path_to_tag):
         # im_path_to_tag - [ (im_path, tag), ... ]

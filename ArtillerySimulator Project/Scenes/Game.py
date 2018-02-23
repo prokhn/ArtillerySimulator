@@ -1,4 +1,5 @@
 import pygame
+import Constants
 from GlobalVariables import Globals, scale
 from Engine.ImageLoader import ImageLoader
 from Engine.CannonLoader import CannonLoader
@@ -21,14 +22,14 @@ class Game:
             btn = GunButton(x, 'left', scale(10), 'bottom', 'ui_btn_gun',
                             Globals.cannons_params[cannon.name],
                             'ui_btn_gun_locked', 'ui_btn_gun_hovered', 'ui_btn_gun_pressed')
-            tooltip = Tooltip(btn, 0, scale(-100), 'ui_tooltip', ['Name: %s' % cannon.name,
-                                                           'Score to unlock: %s' % btn.score_unlock,
-                                                           'Price: %s' % btn.price])
+            tooltip = Tooltip(btn, 0, scale(-100), 'ui_tooltip', ['Имя: %s' % cannon.name,
+                                                           'Очки: %s' % btn.score_unlock,
+                                                           'Цена: %s' % btn.price])
+
             x += btn.rect.width + scale(5)
             can_number += 1
             Globals.ui.add(btn)
             Globals.ui.add(tooltip)
-
 
         ui_score = TextLabel(scale(20), 'left', scale(10), 'up')
         ui_score.set_font(50)
@@ -84,7 +85,7 @@ class Game:
                                     'cannon_1.json',
                                     'cannon_2.json',
                                     'cannon_3.json'])
-        Globals.logger('o', 'Game.on_load() ok. Loaded {} cannons'.format(len(Globals.cannons)))
+        # Globals.logger('o', 'Game.on_load() ok')
 
     def run(self):
         pygame.init()
@@ -120,10 +121,9 @@ class Game:
         while running:
             Globals.input.update()
             if pygame.K_ESCAPE in Globals.input.k_pressed:
-                running = False
+                return Constants.EXC_MENU
             elif Globals.input.quit:
-                running = False
-                return 1
+                return Constants.EXC_EXIT
 
             if pygame.K_EQUALS in Globals.input.k_pressed:
                 if Globals.cannon_current + 1 < len(Globals.cannons):
@@ -145,12 +145,11 @@ class Game:
                 cannon = Globals.cannons[Globals.cannon_current]
                 cannon_curr = Globals.cannon_current
 
-            ui_score.set_text('Score: %s' % Globals.score)
-            ui_coins.set_text('Money: %s' % Globals.money)
-            ui_straight.set_text('Straight: {} - {} to {}'.format(cannon.straigt,
+            ui_score.set_text('  Очки: %s' % Globals.score)
+            ui_coins.set_text('Деньги: %s' % Globals.money)
+            ui_straight.set_text('Сила: {} - от {} до {}'.format(cannon.straigt,
                                                                           cannon.straigt_min,
                                                                           cannon.straigt_max))
-
             pygame.display.update()
 
             sprg_bg.draw(Globals.screen)
@@ -175,4 +174,4 @@ class Game:
             Globals.clock.tick(Globals.fps)
 
         Globals.logger.save()
-        return 2
+        return Constants.EXC_EXIT

@@ -5,7 +5,6 @@ from UI.UIHandler import UIHandler
 from Constants import *
 
 
-
 def scale(num: int):
     return int(num * SCR_SCALE)
 
@@ -66,7 +65,6 @@ class Globals:
     air_friction = 1
     gun_left = scale(10)
     gun_bottom = scale(960)
-    print(gun_bottom)
     particles_count = 7
     particles_image_tags = ['particle_1', 'particle_2', 'particle_3', 'particle_4']
     spr_alive = pygame.sprite.Group()

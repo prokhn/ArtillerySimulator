@@ -1,5 +1,1 @@
-⚠: Couldn't open sprites/background_menu.png
-⚠: Couldn't open sprites/ui_menubutton.png
-⚠: Couldn't open sprites/ui_menubutton_h.png
-⚠: Couldn't open sprites/ui_menubutton_p.png
-⚠: Couldn't open sprites/ui_tooltip.png
+⚠: Couldn't open sprites/HowToPlay.png
