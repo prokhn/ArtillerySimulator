@@ -6,7 +6,7 @@ from UI.Button import Button
 
 class HowToPlayScene:
     def __init__(self):
-        pass
+        self.__name__ = 'HowToPlay'
 
     def init_ui(self):
         self.btn_back = Button(scale(10), 'right', scale(10), 'bottom', 'ui_button', 'ui_button_h', 'ui_button_p')
@@ -25,6 +25,8 @@ class HowToPlayScene:
     def run(self):
         self.on_load()
         self.init_ui()
+        Globals.logger('o', 'HowToPlay.run() - loading ok')
+
         running = True
         while running:
             Globals.input.update()

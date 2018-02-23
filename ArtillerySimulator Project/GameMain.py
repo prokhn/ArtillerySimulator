@@ -4,7 +4,6 @@ from GlobalVariables import Globals
 from Scenes.Game import Game
 from Scenes.Menu import Menu
 from Scenes.HowToPlay import HowToPlayScene
-from Scenes.StartScreen import StartScreen
 
 
 class ScenesManager:
@@ -15,21 +14,16 @@ class ScenesManager:
     def on_new_scene(self):
         Globals.score = 0
         Globals.money = 0
+        Globals.cannon_current = 0
         Globals.spr_alive.empty()
         Globals.spr_particles.empty()
         Globals.spr_targets.empty()
         Globals.spr_coins.empty()
         Globals.ui.clear()
-
-    def start(self):
-        curr_scene = StartScreen()
-        exit_code = curr_scene.run()
-        if exit_code == 1:
-            return
-        elif exit_code == 2:
-            self.run()
+        Globals.logger('o', 'ScenesManager.on_new_scene() Globals was reset')
 
     def run_scene(self, scene):
+        Globals.logger('o', 'ScenesManager.run_scene() runs %s scene' % scene.__name__)
         self.on_new_scene()
         self.curr_scene = scene
         exit_code = self.curr_scene.run()
@@ -47,5 +41,13 @@ class ScenesManager:
 
 if __name__ == '__main__':
     game = ScenesManager()
-    game.run()
+    try:
+        game.run()
+        Globals.logger('o', 'Game was closed without errors')
+    except Exception as e:
+        Globals.logger('e', 'Some error occurred during the game!!')
+        Globals.logger('e', 'Args is {}'.format(e.args[0]))
+
     pygame.quit()
+    Globals.logger('o', 'Pygame.quit() ok, saving logs and quitting the program')
+    Globals.logger.save()

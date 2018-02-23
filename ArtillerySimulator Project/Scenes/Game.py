@@ -13,7 +13,7 @@ from UI.Tooltip import Tooltip
 
 class Game:
     def __init__(self):
-        pass
+        self.__name__ = 'Game'
 
     def init_ui(self):
         x = scale(300)
@@ -85,13 +85,13 @@ class Game:
                                     'cannon_1.json',
                                     'cannon_2.json',
                                     'cannon_3.json'])
-        # Globals.logger('o', 'Game.on_load() ok')
 
     def run(self):
         pygame.init()
 
         self.on_load()
         ui_score, ui_coins, ui_straight = self.init_ui()
+        Globals.logger('o', 'Game.run() - loading ok')
 
         sprg_bg = pygame.sprite.Group()     # Background sprites
         sprg_fg = pygame.sprite.Group()     # Foreground sprites
@@ -117,33 +117,41 @@ class Game:
         Globals.spr_targets.add(target_bronze, target_silver, target_gold)
         Globals.spr_coins.add(coin_1, coin_2, coin_3)
 
+        Globals.logger('o', 'Game.run() - All objects was initialized successfully')
+
         running = True
         while running:
             Globals.input.update()
             if pygame.K_ESCAPE in Globals.input.k_pressed:
+                Globals.logger('o', 'Game.run() - Quitting, cannon shoots %s times' % str(cannon.shot_count))
                 return Constants.EXC_MENU
             elif Globals.input.quit:
+                Globals.logger('o', 'Game.run() - Quitting, cannon shoots %s times' % str(cannon.shot_count))
                 return Constants.EXC_EXIT
-
-            if pygame.K_EQUALS in Globals.input.k_pressed:
-                if Globals.cannon_current + 1 < len(Globals.cannons):
-                    Globals.cannon_current += 1
-                    cannon = Globals.cannons[Globals.cannon_current]
-            if pygame.K_MINUS in Globals.input.k_pressed:
-                if Globals.cannon_current != 0:
-                    Globals.cannon_current -= 1
-                    cannon = Globals.cannons[Globals.cannon_current]
 
             # ------ Cheats ------
             if pygame.K_m in Globals.input.k_pressed:
+                Globals.logger('o', 'Game.run() - Cheat! More money')
                 Globals.money += 20
             if pygame.K_n in Globals.input.k_pressed:
+                Globals.logger('o', 'Game.run() - Cheat! More score')
                 Globals.score += 20
+            if pygame.K_EQUALS in Globals.input.k_pressed:
+                Globals.logger('o', 'Game.run() - Cheat! Setting new cannon (+)')
+                if Globals.cannon_current + 1 < len(Globals.cannons):
+                    Globals.cannon_current += 1
+            if pygame.K_MINUS in Globals.input.k_pressed:
+                Globals.logger('o', 'Game.run() - Cheat! Setting new cannon (-)')
+                if Globals.cannon_current != 0:
+                    Globals.cannon_current -= 1
             # --------------------
 
             if cannon_curr != Globals.cannon_current:
+                Globals.logger('o', 'Game.run() - Cannon changing, prev one shoot %s times' % str(cannon.shot_count))
                 cannon = Globals.cannons[Globals.cannon_current]
                 cannon_curr = Globals.cannon_current
+                Globals.logger('o', 'Game.run() - Cannon changed to %s' % str(cannon_curr))
+
 
             ui_score.set_text('  Очки: %s' % Globals.score)
             ui_coins.set_text('Деньги: %s' % Globals.money)
@@ -173,5 +181,4 @@ class Game:
 
             Globals.clock.tick(Globals.fps)
 
-        Globals.logger.save()
         return Constants.EXC_EXIT

@@ -7,6 +7,7 @@ from UI.Button import Button
 
 class Menu:
     def __init__(self):
+        self.__name__ = 'Menu'
         self.images = {}
         self.ui = UIHandler()
 
@@ -40,6 +41,7 @@ class Menu:
 
         self.on_load()
         self.init_ui()
+        Globals.logger('o', 'Menu.run() - loading ok')
 
         running = True
         while running:

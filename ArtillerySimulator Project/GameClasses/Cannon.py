@@ -67,6 +67,8 @@ class Cannon(pygame.sprite.Sprite):
         self.rot_rect = self.gun_rot.get_rect()
         self.on_rotate()
 
+        self.shot_count = 0
+
     def on_rotate(self):
         self.gun_rot = pygame.transform.rotate(self.img_gun, self.tilt)
         self.rot_rect = self.gun_rot.get_rect()
@@ -113,6 +115,7 @@ class Cannon(pygame.sprite.Sprite):
             # Впрочем, опасность миновала
             # Кажется, у нас почти нет потерь
             # Продолжаем вести наблюдение
+            self.shot_count += 1
             new_ball = CannonBall(x, y, x_vel, y_vel, self.img_ball)
             Globals.spr_alive.add(new_ball)
 

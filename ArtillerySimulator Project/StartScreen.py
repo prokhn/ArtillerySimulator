@@ -1,10 +1,3 @@
-import pygame, importlib
-import GlobalVariables as gv
-import Constants as consts
-from Engine.ImageLoader import ImageLoader
-from UI.Button import Button
-
-
 class StartScreen:
     def __init__(self):
         pass
@@ -39,15 +32,33 @@ class StartScreen:
         self.go.set_text('PLAY', 80)
         self.go.set_text_rect(0, 'center', 0, 'center')
 
-        gv.Globals.ui.add(self.res_lbl, self.fs_lbl, self.res_1, self.res_2, self.res_3, self.fs, self.go)
+        Globals.ui.add(self.res_lbl, self.fs_lbl, self.res_1, self.res_2, self.res_3, self.fs, self.go)
 
     def on_load(self):
         iml = ImageLoader('sprites/')
-        gv.Globals.images.update(iml.load([('background',  'background_menu.png'),
+        Globals.images.update(iml.load([('background',  'background_menu.png'),
                                         ('ui_button',   'ui_menubutton.png'),
                                         ('ui_button_h', 'ui_menubutton_h.png'),
                                         ('ui_button_p', 'ui_menubutton_p.png'),
                                         ('tooltip',     'ui_tooltip.png')]))
+
+    @staticmethod
+    def save_settings(resolution, fullscreen):
+        with open('Constants.py', 'r', encoding='utf-8') as file:
+            file_data = file.readlines()
+            for ind, line in enumerate(file_data):
+                if line.rstrip().startswith('SCR_W'):
+                    file_data[ind] = 'SCR_W = {}\n'.format(resolution[0])
+                elif line.rstrip().startswith('SCR_H'):
+                    file_data[ind] = 'SCR_H = {}\n'.format(resolution[1])
+                elif line.rstrip().startswith('FULLSCREEN'):
+                    if fullscreen:
+                        file_data[ind] = 'FULLSCREEN = True\n'
+                    else:
+                        file_data[ind] = 'FULLSCREEN = False\n'
+
+        with open('Constants.py', 'w', encoding='utf-8') as file:
+            file.write(''.join(file_data))
 
     def run(self):
         self.on_load()
@@ -63,13 +74,13 @@ class StartScreen:
 
         running = True
         while running:
-            gv.Globals.screen.fill((0, 0, 0))
+            Globals.screen.fill((0, 0, 0))
 
-            gv.Globals.input.update()
-            gv.Globals.ui.update()
-            if gv.Globals.input.quit:
+            Globals.input.update()
+            Globals.ui.update()
+            if Globals.input.quit:
                 running = False
-            if pygame.K_ESCAPE in gv.Globals.input.k_pressed:
+            if pygame.K_ESCAPE in Globals.input.k_pressed:
                 running = False
 
             if self.fs.doing_action:
@@ -92,14 +103,33 @@ class StartScreen:
                 self.res_lbl.set_text('Res: ({}, {})'.format(*scr_res))
 
             if self.go.doing_action:
-                consts.SCR_W, consts.SCR_H = scr_res
-                consts.SCR_SCALE = consts.SCR_W / consts.ABS_W
-                consts.FULLSCREEN = fullsceen
-                importlib.reload(gv)
-                return 2
+                self.save_settings(scr_res, fullsceen)
+                return 1
 
-            gv.Globals.ui.draw(gv.Globals.screen)
+            Globals.ui.draw(Globals.screen)
 
             pygame.display.update()
-            gv.Globals.clock.tick(20)
-        return 1
+            Globals.clock.tick(20)
+        return 0
+
+if __name__ == '__main__':
+    StartScreen().save_settings((600, 300), False)
+    import pygame, subprocess
+    from GlobalVariables import Globals
+    from Engine.ImageLoader import ImageLoader
+    from UI.Button import Button
+
+    pygame.init()
+    sc = StartScreen()
+    exit_code = sc.run()
+    pygame.quit()
+    if exit_code == 0:
+        exit(0)
+    else:
+        try:
+            game = subprocess.Popen('python GameMain.py')
+        except:
+            try:
+                game = subprocess.Popen('python3 GameMain.py')
+            except:
+                print('Ошибка! Из консоли невозможно запустить python file!')

@@ -11,27 +11,26 @@ class Logger:
         self.to_console = to_conlose
         self.outfile = outfile
 
+        self.time_start = time.time()
+
         self.messages = []
+        self.messages.append('Game starting time - %s' % time.asctime())
 
     def save(self):
-        if len(self.messages) == 0:
-            with open(self.outfile, 'w', encoding='utf-8') as file:
-                file.write('No logs')
-        elif len(self.messages) == 1:
-            with open(self.outfile, 'w', encoding='utf-8') as file:
-                file.write(self.messages[0])
-        else:
-            with open(self.outfile, 'w', encoding='utf-8') as file:
-                for msg in self.messages[:-1]:
-                    file.write(msg + '\n')
-                file.write(self.messages[-1])
+        with open(self.outfile, 'w', encoding='utf-8') as file:
+            file.write(self.messages[0] + '\n')
+            file.write('=' * 50 + '\n')
+            for msg in self.messages[1:]:
+                file.write(msg + '\n')
+            file.write('Saving time - %s\n' % time.asctime())
+            file.write('=' * 50 + '\n')
+            file.write('Program runs %s sec' % str(round(time.time() - self.time_start, 2)))
 
     def __call__(self, ms_type, message, console_only=False):
         if self.time_need:
-            # TODO time converting
-            crtime = ''
+            crtime = time.strftime('%H:%M:%S')
         else:
-            crtime = ''
+            crtime = time.strftime('%H:%M:%S')
 
         if ms_type == 'o':
             tp = self.type_ok
@@ -42,7 +41,7 @@ class Logger:
         else:
             tp = '!!(Unknown type)!!'
 
-        msg = tp + self.type_sep + message
+        msg = tp + '(%s)' % crtime + self.type_sep + message
         if not console_only:
             self.messages.append(msg)
 

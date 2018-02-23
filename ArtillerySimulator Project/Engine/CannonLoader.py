@@ -16,5 +16,5 @@ class CannonLoader:
                 cannon = Cannon(params)
                 all_cannons.append(cannon)
             except Exception as e:
-                Globals.logger('e', 'CannonLoader: ' + ', '.join(e.args))
+                Globals.logger('e', 'CannonLoader.load(): ' + ', '.join(e.args))
         return all_cannons

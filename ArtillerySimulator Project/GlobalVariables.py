@@ -20,6 +20,7 @@ class Globals:
         screen = pygame.display.set_mode((scr_width, scr_height), pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode((scr_width, scr_height))
+    pygame.display.set_caption('Artillery Simulator')
     # ----------------------------
 
     # ----------- Images ---------
@@ -28,7 +29,7 @@ class Globals:
 
     # --------- Classes ----------
     input = Input()
-    logger = Logger()
+    logger = Logger(time_need=True, immed_write=False, to_conlose=False)
     ui = UIHandler()
     # ----------------------------
 
@@ -73,3 +74,6 @@ class Globals:
     spr_coins = pygame.sprite.Group()
     sprites_groups = [spr_alive, spr_particles]
     # ----------------------------
+
+    logger('o', 'Globals class initialized, scr_scale is %s' % str(round(scr_scale, 3)))
+    logger('o', 'Other params: scr_width = {}, scr_height = {}'.format(scr_width, scr_height))

@@ -35,3 +35,4 @@ class GunButton(Button):
                 if not self.was_bought:
                     Globals.money -= self.price
                     self.was_bought = True
+                    Globals.logger('o', 'GunButton.on_click_out() - new gun was bought - %s' % self.cannon_num)
