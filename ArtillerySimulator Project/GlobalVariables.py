@@ -21,6 +21,8 @@ class Globals:
     else:
         screen = pygame.display.set_mode((scr_width, scr_height))
     pygame.display.set_caption('Artillery Simulator')
+    icon = pygame.image.load('sprites/_icon.png')
+    pygame.display.set_icon(icon)
     # ----------------------------
 
     # ----------- Images ---------

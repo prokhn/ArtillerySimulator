@@ -114,7 +114,7 @@ class StartScreen:
 
 if __name__ == '__main__':
     StartScreen().save_settings((600, 300), False)
-    import pygame, subprocess
+    import pygame, subprocess, os
     from GlobalVariables import Globals
     from Engine.ImageLoader import ImageLoader
     from UI.Button import Button
@@ -127,9 +127,12 @@ if __name__ == '__main__':
         exit(0)
     else:
         try:
-            game = subprocess.Popen('python GameMain.py')
-        except:
-            try:
-                game = subprocess.Popen('python3 GameMain.py')
-            except:
-                print('Ошибка! Из консоли невозможно запустить python file!')
+            if os.name == 'nt':
+                game = subprocess.Popen('ArtillerySimulator.bat')
+            else:
+                game = subprocess.Popen(['$nohup', 'GameMain.pyw &'])
+        except Exception as e:
+            with open('_ERROR_.txt', 'w', encoding='utf-8') as file:
+                file.write('Some error occured when trying to lauch GameMain.pyw\n')
+                file.write('Ask developers for help\n')
+                file.write('Error args: %s' % str(e.args))
