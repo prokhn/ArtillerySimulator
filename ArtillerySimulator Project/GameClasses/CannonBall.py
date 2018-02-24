@@ -1,4 +1,4 @@
-import pygame, time
+import pygame, time, math
 from GlobalVariables import Globals
 
 class CannonBall(pygame.sprite.Sprite):

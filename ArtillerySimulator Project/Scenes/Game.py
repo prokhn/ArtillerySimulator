@@ -55,17 +55,20 @@ class Game:
                                    ('cannon_2_pl',  'cannon_2_pl.png'),
                                    ('cannon_3',     'cannon_3.png'),
                                    ('cannon_3_pl',  'cannon_3_pl.png'),
+                                   ('cannon_4',     'cannon_4.png'),
+                                   ('cannon_4_pl',  'cannon_4_pl.png'),
                                    ('ball_0',       'ball_1.png'),
+                                   ('ball_2',       'ball_2.png'),
                                    ('target_bronze','target_bronze.png'),
                                    ('target_silver','target_silver.png'),
                                    ('target_gold',  'target_gold.png'),
                                    ('coin_1',       'coin_1.png'),
                                    ('coin_2',       'coin_2.png'),
                                    ('coin_3',       'coin_3.png'),
-                                   ('particle_1',  'particle_1.png'),
-                                   ('particle_2', 'particle_2.png'),
-                                   ('particle_3', 'particle_3.png'),
-                                   ('particle_4', 'particle_4.png'),])
+                                   ('particle_1',   'particle_1.png'),
+                                   ('particle_2',   'particle_2.png'),
+                                   ('particle_3',   'particle_3.png'),
+                                   ('particle_4',   'particle_4.png'),])
         # ---------- UI ----------
         Globals.images.update(iml.load([('ui_btn_gun',         'ui_btn_gun.png'),
                                         ('ui_btn_gun_hovered', 'ui_btn_gun_hovered.png'),
@@ -76,7 +79,8 @@ class Game:
         Globals.images.update(iml.load([('cannon_0_icon', 'cannon_0_icon.png'),
                                         ('cannon_1_icon', 'cannon_1_icon.png'),
                                         ('cannon_2_icon', 'cannon_2_icon.png'),
-                                        ('cannon_3_icon', 'cannon_3_icon.png')]))
+                                        ('cannon_3_icon', 'cannon_3_icon.png'),
+                                        ('cannon_4_icon', 'cannon_4_icon.png')]))
         # --------- End ----------
 
 
@@ -84,7 +88,8 @@ class Game:
         Globals.cannons = cnl.load(['cannon_0.json',
                                     'cannon_1.json',
                                     'cannon_2.json',
-                                    'cannon_3.json'])
+                                    'cannon_3.json',
+                                    'cannon_4.json'])
 
     def run(self):
         pygame.init()
@@ -104,6 +109,7 @@ class Game:
         grass.set_pos(0, ground.rect.y - grass.rect.height)
 
         cannon = Globals.cannons[Globals.cannon_current]
+        cannon.shot_count = 0
         cannon_curr = Globals.cannon_current
 
         target_bronze = Target(Globals.targets_params['bronze'])
@@ -149,6 +155,7 @@ class Game:
             if cannon_curr != Globals.cannon_current:
                 Globals.logger('o', 'Game.run() - Cannon changing, prev one shoot %s times' % str(cannon.shot_count))
                 cannon = Globals.cannons[Globals.cannon_current]
+                cannon.shot_count = 0
                 cannon_curr = Globals.cannon_current
                 Globals.logger('o', 'Game.run() - Cannon changed to %s' % str(cannon_curr))
 

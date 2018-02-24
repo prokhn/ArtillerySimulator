@@ -42,15 +42,16 @@ class Globals:
 
     # --------- Cannons ----------
     cannons = []
-    cannon_current = 0
+    cannon_current = 3
     # ----------------------------
 
     # ---------- Params ----------
     # Cannons - Cannon.name: [button_icon, icon_borders, cannon_number, score_to_unlock, price]
-    cannons_params = {'Cannon 0': ['cannon_0_icon', 10, 0, 0, 0],
-                      'Cannon 1': ['cannon_1_icon', 10, 1, 10, 0],
-                      'Cannon 2': ['cannon_2_icon', 10, 2, 20, 0],
-                      'Cannon 3': ['cannon_3_icon', 10, 3, 30, 20]}
+    cannons_params = {'Новичок': ['cannon_0_icon', 10, 0, 0, 0],
+                      'Пират': ['cannon_1_icon', 10, 1, 10, 0],
+                      'Зенитка': ['cannon_2_icon', 10, 2, 20, 5],
+                      'Артиллерия': ['cannon_3_icon', 10, 3, 30, 15],
+                      'Лазер 2049': ['cannon_4_icon', 10, 4, 120, 50]}
     # Targets - rang: [img_tag, score_adds, minx, maxx, miny, maxy]
     targets_params = {'bronze': ['target_bronze', 5,  scale(275),  scale(700),  scale(100), scale(900)],
                       'silver': ['target_silver', 10, scale(900),  scale(1500), scale(200), scale(800)],

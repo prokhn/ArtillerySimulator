@@ -1,5 +1,5 @@
 {
-  "name": "Cannon 3",
+  "name": "Артиллерия",
   "tilt": 0,
   "tilt_min": 0,
   "tilt_max": 50,
@@ -9,7 +9,7 @@
   "straigt_max": 34,
   "straigt_delta": 2,
   "gun_rotc": "(-50, 0)",
-  "plt_rotc": "(66, 14)",
+  "plt_rotc": "(150, 35)",
   "ball_spawn": "(90, 0)",
   "img_gun": "cannon_3",
   "img_platform": "cannon_3_pl",

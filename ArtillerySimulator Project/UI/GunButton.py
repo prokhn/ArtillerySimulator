@@ -18,6 +18,9 @@ class GunButton(Button):
     def update(self):
         if Globals.score >= self.score_unlock and Globals.money >= self.price:
             self.locked = False
+        else:
+            if not self.was_bought:
+                self.locked = True
         super().update()
 
     def draw(self, screen: pygame.Surface):
